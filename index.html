@@ -4,83 +4,99 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Sombrero Seleccionador · Casas del Colegio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
 <style>
     :root{
         --text: #c9d3e8;
-        --text-light: #ffffff;
-        --muted: #8b97b5;
+        --text-light: #f4ecd8; /* Tono pergamino */
+        --muted: #a89984;
+        --gold: #d4af37;
 
         /* Colores de las casas */
         --pegasus: #f2c33a;
-        --pegasus-glow: rgba(242, 195, 58, .55);
+        --pegasus-glow: rgba(242, 195, 58, .65);
         --dragon: #e03131;
-        --dragon-glow: rgba(224, 49, 49, .55);
+        --dragon-glow: rgba(224, 49, 49, .65);
         --centauro: #2f9e44;
-        --centauro-glow: rgba(47, 158, 68, .55);
+        --centauro-glow: rgba(47, 158, 68, .65);
         --kraken: #1c7ed6;
-        --kraken-glow: rgba(28, 126, 214, .55);
+        --kraken-glow: rgba(28, 126, 214, .65);
     }
 
     *{ box-sizing: border-box; margin: 0; padding: 0; }
 
     body{
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        font-family: 'Cinzel', serif;
         color: var(--text);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2.5rem 1.25rem 4rem;
+        padding: 3rem 1.25rem 4rem;
         overflow-x: hidden;
         position: relative;
-        background:
-            radial-gradient(1200px 600px at 50% -10%, #16203a 0%, transparent 70%),
-            radial-gradient(800px 500px at 90% 110%, #101a30 0%, transparent 70%),
-            linear-gradient(180deg, #070a14 0%, #04060d 100%);
+        background-color: #0c0a09;
+        /* Fondo simulando el Gran Comedor */
+        background-image: 
+            radial-gradient(circle at 50% 40%, rgba(45, 35, 25, 0.8) 0%, transparent 60%),
+            radial-gradient(circle at 10% 90%, rgba(20, 15, 10, 0.9) 0%, transparent 50%),
+            radial-gradient(circle at 90% 90%, rgba(20, 15, 10, 0.9) 0%, transparent 50%),
+            url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.08"/></svg>');
     }
 
-    /* ---------- FONDO ANIMADO ---------- */
-    .aurora{
-        position: fixed;
-        inset: -25%;
-        z-index: 0;
-        pointer-events: none;
-        filter: blur(90px);
-        opacity: .35;
-    }
-    .aurora span{
-        position: absolute;
-        width: 42vmax;
-        height: 42vmax;
-        border-radius: 50%;
-        mix-blend-mode: screen;
-    }
-    .aurora span:nth-child(1){ background: var(--pegasus);  top: -12%; left: -8%;  animation: drift1 22s ease-in-out infinite alternate; }
-    .aurora span:nth-child(2){ background: var(--dragon);   top: -16%; right: -10%; animation: drift2 26s ease-in-out infinite alternate; }
-    .aurora span:nth-child(3){ background: var(--centauro); bottom: -18%; left: -6%; animation: drift3 24s ease-in-out infinite alternate; }
-    .aurora span:nth-child(4){ background: var(--kraken);   bottom: -20%; right: -8%; animation: drift4 20s ease-in-out infinite alternate; }
-
-    @keyframes drift1{ to{ transform: translate3d(14vw, 10vh, 0) scale(1.25); } }
-    @keyframes drift2{ to{ transform: translate3d(-16vw, 12vh, 0) scale(1.15); } }
-    @keyframes drift3{ to{ transform: translate3d(12vw, -14vh, 0) scale(1.2); } }
-    @keyframes drift4{ to{ transform: translate3d(-14vw, -10vh, 0) scale(1.3); } }
-
-    .stars{
+    /* Viñeta para oscurecer los bordes */
+    body::after {
+        content: '';
         position: fixed;
         inset: 0;
-        z-index: 0;
         pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+        z-index: 0;
+    }
+
+    /* ---------- VELAS FLOTANTES ---------- */
+    .candles-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
         overflow: hidden;
     }
-    .stars span{
+
+    .candle {
         position: absolute;
-        background: #ffffff;
-        border-radius: 50%;
-        animation: twinkle 4s ease-in-out infinite;
+        width: 6px;
+        height: 28px;
+        background: linear-gradient(to right, #eaddcd, #fdf6e3, #d4c4b0);
+        border-radius: 3px;
+        box-shadow: inset -1px 0 2px rgba(0,0,0,0.4);
+        animation: floatCandle 6s ease-in-out infinite alternate;
     }
-    @keyframes twinkle{
-        0%, 100%{ opacity: .12; transform: scale(.7); }
-        50%      { opacity: .95; transform: scale(1.35); }
+
+    .candle::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 14px;
+        background: #ffb703;
+        border-radius: 50% 50% 20% 20%;
+        box-shadow: 0 0 10px #ffb703, 0 0 20px #fb8500, 0 0 40px rgba(251, 133, 0, 0.6);
+        animation: flicker 0.15s infinite alternate;
+    }
+
+    @keyframes floatCandle {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-30px); }
+    }
+
+    @keyframes flicker {
+        0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+        100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
     }
 
     /* ---------- CABECERA ---------- */
@@ -88,29 +104,44 @@
         position: relative;
         z-index: 1;
         text-align: center;
-        margin-bottom: 2.5rem;
-        max-width: 760px;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        animation: fadeInDown 1.5s ease-out;
+    }
+
+    .header-subtitle {
+        font-family: 'MedievalSharp', cursive;
+        color: var(--gold);
+        font-size: 1rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     h1{
-        font-size: clamp(1.8rem, 4.5vw, 2.9rem);
-        letter-spacing: .06em;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        font-weight: 900;
+        letter-spacing: .05em;
         text-transform: uppercase;
-        background: linear-gradient(90deg,
-            var(--pegasus), var(--dragon), var(--centauro), var(--kraken), var(--pegasus));
-        background-size: 300% 100%;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        animation: shimmer 9s linear infinite;
-        margin-bottom: .6rem;
+        color: var(--gold);
+        text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0,0,0,0.9);
+        margin-bottom: 1rem;
+        line-height: 1.1;
     }
-    @keyframes shimmer{ to{ background-position: 300% 0; } }
 
     header p{
-        color: var(--muted);
-        font-size: .98rem;
-        letter-spacing: .03em;
+        font-family: 'MedievalSharp', cursive;
+        color: #d1c3b0;
+        font-size: 1.1rem;
+        letter-spacing: .05em;
+        font-style: italic;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     /* ---------- LAYOUT ---------- */
@@ -122,7 +153,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2.5rem;
+        gap: 3rem;
     }
 
     /* ---------- ESCENARIO DEL SOMBRERO ---------- */
@@ -130,7 +161,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.8rem;
+        gap: 2rem;
+        margin-top: 1rem;
     }
 
     .hat-stage{
@@ -144,7 +176,8 @@
         border: 4px solid rgba(140, 160, 200, .22);
         --house-color: #8fa3c8;
         --house-glow: rgba(143, 163, 200, .4);
-        transition: border-color .6s ease, box-shadow .6s ease;
+        transition: border-color .6s ease, box-shadow .6s ease, background .6s ease;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.8);
     }
 
     /* Anillo giratorio de colores alrededor del sombrero */
@@ -169,41 +202,43 @@
         animation: idle-breathe 4.5s ease-in-out infinite;
     }
     @keyframes idle-breathe{
-        0%, 100%{ box-shadow: 0 0 25px rgba(120, 160, 255, .12); }
-        50%      { box-shadow: 0 0 50px rgba(120, 160, 255, .30); }
+        0%, 100%{ box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(120, 160, 255, .12); }
+        50%      { box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 50px rgba(120, 160, 255, .30); }
     }
 
     /* Estado PENSANDO: el halo recorre los 4 colores */
     .hat-stage.sorting{
-        animation: cycle-glow 2.4s linear infinite;
+        animation: cycle-glow 2s linear infinite;
+        background: radial-gradient(circle at 50% 45%, #2a1a10 0%, #0a0604 72%);
     }
     @keyframes cycle-glow{
         0%, 100%{
             border-color: var(--pegasus);
-            box-shadow: 0 0 40px var(--pegasus-glow), 0 0 95px var(--pegasus-glow);
+            box-shadow: 0 0 40px var(--pegasus-glow), 0 0 100px var(--pegasus-glow), inset 0 0 30px var(--pegasus-glow);
         }
         25%{
             border-color: var(--dragon);
-            box-shadow: 0 0 40px var(--dragon-glow), 0 0 95px var(--dragon-glow);
+            box-shadow: 0 0 40px var(--dragon-glow), 0 0 100px var(--dragon-glow), inset 0 0 30px var(--dragon-glow);
         }
         50%{
             border-color: var(--centauro);
-            box-shadow: 0 0 40px var(--centauro-glow), 0 0 95px var(--centauro-glow);
+            box-shadow: 0 0 40px var(--centauro-glow), 0 0 100px var(--centauro-glow), inset 0 0 30px var(--centauro-glow);
         }
         75%{
             border-color: var(--kraken);
-            box-shadow: 0 0 40px var(--kraken-glow), 0 0 95px var(--kraken-glow);
+            box-shadow: 0 0 40px var(--kraken-glow), 0 0 100px var(--kraken-glow), inset 0 0 30px var(--kraken-glow);
         }
     }
     .hat-stage.sorting::before{
         opacity: 1;
-        animation-duration: 1.2s;
+        animation-duration: 1s;
     }
 
     /* Estado FINAL: color fijo de la casa */
     .hat-stage.sorted{
         border-color: var(--house-color);
-        box-shadow: 0 0 50px var(--house-glow), 0 0 120px var(--house-glow);
+        box-shadow: 0 0 50px var(--house-glow), 0 0 120px var(--house-glow), inset 0 0 40px var(--house-glow);
+        background: radial-gradient(circle at 50% 45%, rgba(0,0,0,0.6) 0%, #050302 80%);
     }
     .hat-stage.sorted::before{
         opacity: .95;
@@ -212,31 +247,39 @@
             var(--house-color), transparent 55%, var(--house-color));
     }
 
-    .hat-icon{
-        font-size: 6rem;
-        line-height: 1;
-        filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .6));
-        transition: transform .3s ease;
-        user-select: none;
+    /* El nuevo sombrero SVG */
+    .hat-svg {
+        width: 170px;
+        height: 170px;
+        filter: drop-shadow(0 15px 15px rgba(0,0,0,0.8));
+        transition: transform .3s ease, filter .3s ease;
+        z-index: 2;
     }
-    .hat-stage.sorting .hat-icon{
-        animation: wobble .45s ease-in-out infinite alternate;
+
+    .hat-stage.sorting .hat-svg{
+        animation: wobble .4s ease-in-out infinite alternate;
+        filter: drop-shadow(0 0 25px var(--house-color)) brightness(1.2);
     }
+    
+    .hat-stage.sorted .hat-svg {
+        filter: drop-shadow(0 0 35px var(--house-color)) brightness(1.1);
+    }
+
     @keyframes wobble{
-        from{ transform: rotate(-9deg) scale(1.07); }
-        to  { transform: rotate(9deg)  scale(1.07); }
+        from{ transform: rotate(-7deg) scale(1.05) translateY(-5px); }
+        to  { transform: rotate(7deg)  scale(1.05) translateY(5px); }
     }
 
     /* ---------- TEXTO DE ANUNCIO ---------- */
     .announcement{
-        font-size: clamp(1.05rem, 2.6vw, 1.35rem);
-        font-weight: 600;
-        letter-spacing: .02em;
+        font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+        font-weight: 700;
+        letter-spacing: .05em;
         text-align: center;
-        min-height: 2.4rem;
+        min-height: 2.5rem;
         color: var(--text-light);
-        transition: color .4s ease;
-        text-shadow: 0 2px 12px rgba(0, 0, 0, .6);
+        transition: color .4s ease, text-shadow .4s ease;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, .9);
     }
 
     .dots{ display: inline-block; width: 1.4em; text-align: left; }
@@ -255,7 +298,7 @@
     .student-grid{
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-        gap: 1.3rem;
+        gap: 1.4rem;
         width: 100%;
     }
 
@@ -267,20 +310,21 @@
         align-items: center;
         gap: .75rem;
         padding: 1.5rem 1rem;
-        border-radius: 18px;
+        border-radius: 12px;
         cursor: pointer;
-        background: linear-gradient(160deg, #161d33 0%, #0c1120 100%);
-        border: 1px solid rgba(120, 140, 180, .18);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+        /* Estilo de pergamino oscuro / piedra */
+        background: linear-gradient(160deg, #231b15 0%, #110c08 100%);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, .6);
         transition: transform .3s cubic-bezier(.25, .8, .25, 1),
                     border-color .3s ease,
                     box-shadow .3s ease;
-        animation: card-in .6s cubic-bezier(.2, .8, .25, 1) backwards;
-        animation-delay: calc(var(--i) * 70ms);
+        animation: card-in .8s cubic-bezier(.2, .8, .25, 1) backwards;
+        animation-delay: calc(var(--i) * 80ms);
     }
 
     @keyframes card-in{
-        from{ opacity: 0; transform: translateY(26px) scale(.94); }
+        from{ opacity: 0; transform: translateY(30px) scale(.9); }
         to  { opacity: 1; transform: none; }
     }
 
@@ -292,7 +336,7 @@
         left: -70%;
         width: 50%;
         height: 100%;
-        background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent);
+        background: linear-gradient(100deg, transparent, rgba(212, 175, 55, .15), transparent);
         transform: skewX(-18deg);
         transition: left .6s ease;
         pointer-events: none;
@@ -300,9 +344,9 @@
     .student-card:not(.sorted):hover::after{ left: 130%; }
 
     .student-card:not(.sorted):hover{
-        transform: translateY(-7px);
-        border-color: rgba(180, 200, 240, .55);
-        box-shadow: 0 14px 30px rgba(0, 0, 0, .5), 0 0 22px rgba(140, 180, 255, .18);
+        transform: translateY(-6px);
+        border-color: rgba(212, 175, 55, 0.6);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, .7), 0 0 20px rgba(212, 175, 55, .15);
     }
 
     .student-avatar{
@@ -312,32 +356,34 @@
         display: grid;
         place-items: center;
         font-size: 1.9rem;
-        background: rgba(255, 255, 255, .05);
-        border: 2px solid rgba(255, 255, 255, .08);
+        background: rgba(0, 0, 0, .4);
+        border: 2px solid rgba(212, 175, 55, .2);
         transition: all .45s cubic-bezier(.175, .885, .32, 1.275);
     }
 
     .student-name{
+        font-family: 'MedievalSharp', cursive;
         color: var(--text-light);
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: 600;
         text-align: center;
         line-height: 1.25;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .house-badge{
         margin-top: auto;
-        padding: .34rem .95rem;
-        border-radius: 999px;
-        font-size: .7rem;
-        font-weight: 800;
+        padding: .4rem 1rem;
+        border-radius: 4px;
+        font-size: .75rem;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: .13em;
-        background: rgba(255, 255, 255, .06);
+        letter-spacing: .15em;
+        background: rgba(0, 0, 0, .5);
         color: var(--muted);
-        border: 1px solid rgba(255, 255, 255, .07);
+        border: 1px solid rgba(255, 255, 255, .05);
         opacity: 0;
-        transform: scale(.6) translateY(8px);
+        transform: scale(.8) translateY(8px);
         transition: all .5s cubic-bezier(.175, .885, .32, 1.275);
     }
 
@@ -345,12 +391,13 @@
     .student-card.sorted{
         cursor: default;
         border-color: var(--house-color);
-        box-shadow: 0 0 24px var(--house-glow), inset 0 0 34px -14px var(--house-color);
+        box-shadow: 0 0 25px var(--house-glow), inset 0 0 40px -10px var(--house-color);
+        background: linear-gradient(160deg, #1a1512 0%, #0a0604 100%);
     }
     .student-card.sorted .student-avatar{
         border-color: var(--house-color);
         box-shadow: 0 0 20px var(--house-glow), inset 0 0 20px var(--house-glow);
-        transform: scale(1.06);
+        transform: scale(1.08);
     }
     .student-card.sorted .house-badge{
         opacity: 1;
@@ -358,26 +405,30 @@
         background: var(--house-color);
         color: var(--house-text, #fff);
         border-color: transparent;
-        box-shadow: 0 0 18px var(--house-glow);
+        box-shadow: 0 0 15px var(--house-glow);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
     /* ---------- BOTÓN REINICIAR ---------- */
     .reset-btn{
-        background: rgba(255, 255, 255, .04);
-        border: 1px solid rgba(150, 170, 220, .25);
-        color: var(--text);
-        padding: .75rem 1.6rem;
-        border-radius: 999px;
+        background: rgba(212, 175, 55, .05);
+        border: 1px solid rgba(212, 175, 55, .4);
+        color: var(--gold);
+        padding: .8rem 1.8rem;
+        border-radius: 4px;
         cursor: pointer;
+        font-family: 'Cinzel', serif;
         font-size: .9rem;
-        letter-spacing: .05em;
-        font-family: inherit;
-        transition: all .25s ease;
+        font-weight: 700;
+        letter-spacing: .1em;
+        transition: all .3s ease;
+        text-transform: uppercase;
     }
     .reset-btn:hover{
-        background: rgba(255, 255, 255, .1);
-        border-color: rgba(200, 220, 255, .55);
+        background: rgba(212, 175, 55, .15);
+        border-color: var(--gold);
         color: #fff;
+        box-shadow: 0 0 20px rgba(212, 175, 55, .4);
         transform: translateY(-2px);
     }
 
@@ -391,7 +442,7 @@
     }
     .flash-overlay.active{ animation: flash-burst .85s ease-out forwards; }
     @keyframes flash-burst{
-        0%  { opacity: .75; }
+        0%  { opacity: .6; }
         100%{ opacity: 0; }
     }
 
@@ -402,46 +453,82 @@
         pointer-events: none;
         z-index: 1000;
         transform: translate(-50%, -50%);
-        animation: pop 1.1s cubic-bezier(.15, .7, .3, 1) forwards;
+        animation: pop 1.2s cubic-bezier(.15, .7, .3, 1) forwards;
     }
     @keyframes pop{
         0%{
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1.5);
         }
         100%{
             opacity: 0;
-            transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(.15);
+            transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(.1);
         }
     }
 
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 480px){
         .hat-stage{ width: 200px; height: 200px; }
-        .hat-icon{ font-size: 4.6rem; }
+        .hat-svg{ width: 130px; height: 130px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+        h1 { font-size: 2rem; }
     }
 </style>
 </head>
 <body>
 
-    <!-- Fondo animado -->
-    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-    <div class="stars" id="stars" aria-hidden="true"></div>
+    <!-- Capa de velas flotantes -->
+    <div class="candles-layer" id="candlesLayer" aria-hidden="true"></div>
 
     <!-- Destello de la casa -->
     <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
 
     <header>
-        <h1>El Sombrero Seleccionador</h1>
-        <p>Haz clic en un alumno para descubrir a qué casa pertenece</p>
+        <div class="header-subtitle">La Ceremonia de Selección</div>
+        <h1>¿A qué casa perteneces?</h1>
+        <p>Haz clic en un alumno y el Sombrero revelará su destino.</p>
     </header>
 
     <main class="container">
 
         <div class="hat-area">
             <div class="hat-stage" id="hatStage">
-                <div class="hat-icon" id="hatIcon">🎩</div>
+                <!-- Sombrero SVG de Tres Picos -->
+                <svg class="hat-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- Gradiente para dar volumen al cuero -->
+                        <radialGradient id="hatGrad" cx="50%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#8a5a3c"/>
+                            <stop offset="60%" stop-color="#5c3622"/>
+                            <stop offset="100%" stop-color="#2e170c"/>
+                        </radialGradient>
+                        <radialGradient id="brimGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#4a2c16"/>
+                            <stop offset="100%" stop-color="#1f0f06"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- Base / Ala del sombrero -->
+                    <ellipse cx="100" cy="165" rx="80" ry="20" fill="url(#brimGrad)"/>
+                    <!-- Pico izquierdo -->
+                    <path d="M 20,165 Q 40,120 50,130 Q 60,160 80,165 Z" fill="#3b1f0b"/>
+                    <!-- Pico derecho -->
+                    <path d="M 180,165 Q 160,120 150,130 Q 140,160 120,165 Z" fill="#3b1f0b"/>
+
+                    <!-- Cuerpo principal del sombrero (el pico central) -->
+                    <path d="M 100,15 C 60,20 45,80 35,135 C 50,160 80,165 100,165 C 120,165 150,160 165,135 C 155,80 140,20 100,15 Z" fill="url(#hatGrad)"/>
+
+                    <!-- Arrugas y pliegues -->
+                    <path d="M 45,110 Q 70,130 100,120 Q 130,130 155,110" stroke="#2a1406" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M 55,80 Q 80,100 100,90 Q 120,100 145,80" stroke="#2a1406" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                    <!-- La cara: ojos y boca -->
+                    <path d="M 65,90 Q 80,105 90,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
+                    <path d="M 135,90 Q 120,105 110,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
+                    
+                    <!-- Abertura de la boca -->
+                    <path d="M 80,130 Q 100,150 120,130 Q 100,145 80,130 Z" fill="#1c0c03"/>
+                </svg>
             </div>
             <div class="announcement" id="announcement">
                 Esperando a un alumno<span class="dots"></span>
@@ -467,10 +554,6 @@ const HOUSES = {
 
 /* =========================================================
    2. LISTADO DE ALUMNOS  ← EDITA AQUÍ
-   ---------------------------------------------------------
-   name  : nombre del alumno
-   house : 'pegasus' | 'dragon' | 'centauro' | 'kraken'
-   icon  : emoji del avatar
    ========================================================= */
 const studentsData = [
     { id: 1,  name: 'Lucía Fernández', house: 'pegasus',  icon: '🕊️' },
@@ -490,30 +573,39 @@ const studentsData = [
 /* =========================================================
    3. REFERENCIAS DEL DOM
    ========================================================= */
-const studentGrid  = document.getElementById('studentGrid');
-const hatStage     = document.getElementById('hatStage');
-const hatIcon      = document.getElementById('hatIcon');
-const announcement = document.getElementById('announcement');
-const flashOverlay = document.getElementById('flashOverlay');
-const resetBtn     = document.getElementById('resetBtn');
-const starsLayer   = document.getElementById('stars');
+const studentGrid   = document.getElementById('studentGrid');
+const hatStage      = document.getElementById('hatStage');
+const announcement  = document.getElementById('announcement');
+const flashOverlay  = document.getElementById('flashOverlay');
+const resetBtn      = document.getElementById('resetBtn');
+const candlesLayer  = document.getElementById('candlesLayer');
 
 let isSorting = false;
 
 /* =========================================================
-   4. FONDO: ESTRELLAS
+   4. FONDO: VELAS FLOTANTES
    ========================================================= */
-(function createStars(){
-    for (let i = 0; i < 80; i++){
-        const star = document.createElement('span');
-        const size = Math.random() * 2 + 1;
-        star.style.width  = size + 'px';
-        star.style.height = size + 'px';
-        star.style.left   = Math.random() * 100 + '%';
-        star.style.top    = Math.random() * 100 + '%';
-        star.style.animationDelay    = (Math.random() * 6).toFixed(2) + 's';
-        star.style.animationDuration = (3 + Math.random() * 4).toFixed(2) + 's';
-        starsLayer.appendChild(star);
+(function createCandles(){
+    const numCandles = 25;
+    for (let i = 0; i < numCandles; i++){
+        const candle = document.createElement('div');
+        candle.className = 'candle';
+        
+        // Distribuir por toda la pantalla
+        candle.style.left = Math.random() * 100 + 'vw';
+        candle.style.top = (10 + Math.random() * 80) + 'vh';
+        
+        // Animación y retardo aleatorio para que no floten al unísono
+        const duration = 4 + Math.random() * 4;
+        const delay = Math.random() * -6;
+        candle.style.animationDuration = duration + 's';
+        candle.style.animationDelay = delay + 's';
+        
+        // Tamaño ligeramente aleatorio
+        const scale = 0.6 + Math.random() * 0.8;
+        candle.style.transform = `scale(${scale})`;
+
+        candlesLayer.appendChild(candle);
     }
 })();
 
@@ -550,7 +642,6 @@ function triggerSorting(student, card){
     // --- Fase 1: el sombrero piensa ---
     hatStage.classList.remove('sorted');
     hatStage.classList.add('sorting');
-    hatIcon.textContent = '🧙';
 
     announcement.innerHTML =
         `El Sombrero está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span>`;
@@ -563,8 +654,6 @@ function triggerSorting(student, card){
         hatStage.style.setProperty('--house-color', house.color);
         hatStage.style.setProperty('--house-glow',  house.glow);
         hatStage.classList.add('sorted');
-
-        hatIcon.textContent = '🎩';
 
         announcement.innerHTML =
             `<strong style="color:${house.color}">${student.name}</strong>` +
@@ -598,12 +687,12 @@ function burstParticles(color){
     const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
 
-    for (let i = 0; i < 34; i++){
+    for (let i = 0; i < 40; i++){
         const p = document.createElement('div');
         p.className = 'particle';
 
         const angle = Math.random() * Math.PI * 2;
-        const dist  = 110 + Math.random() * 220;
+        const dist  = 120 + Math.random() * 250;
         const size  = 4 + Math.random() * 8;
 
         p.style.setProperty('--x', Math.cos(angle) * dist + 'px');
@@ -614,11 +703,11 @@ function burstParticles(color){
         p.style.height = size + 'px';
         p.style.background = color;
         p.style.color      = color;
-        p.style.boxShadow  = `0 0 12px ${color}`;
-        p.style.animationDelay = (Math.random() * 0.12) + 's';
+        p.style.boxShadow  = `0 0 15px ${color}`;
+        p.style.animationDelay = (Math.random() * 0.15) + 's';
 
         document.body.appendChild(p);
-        setTimeout(() => p.remove(), 1400);
+        setTimeout(() => p.remove(), 1500);
     }
 }
 
@@ -631,7 +720,6 @@ resetBtn.addEventListener('click', () => {
     hatStage.classList.remove('sorted');
     hatStage.style.removeProperty('--house-color');
     hatStage.style.removeProperty('--house-glow');
-    hatIcon.textContent = '🎩';
 
     announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
 
