@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Sombrero Seleccionador · Casas del Colegio</title>
+<title>El Oráculo Seleccionador · Casas del Colegio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
@@ -203,8 +203,8 @@
         gap: 2.5rem;
     }
 
-    /* ---------- ESCENARIO DEL SOMBRERO ---------- */
-    .hat-area{
+    /* ---------- ESCENARIO DEL ORÁCULO ---------- */
+    .oracle-area{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -212,7 +212,7 @@
         margin-top: 0.5rem;
     }
 
-    .hat-stage{
+    .oracle-stage{
         position: relative;
         width: 250px;
         height: 250px;
@@ -227,8 +227,8 @@
         box-shadow: 0 15px 35px rgba(0,0,0,0.8);
     }
 
-    /* Anillo giratorio de colores alrededor del sombrero */
-    .hat-stage::before{
+    /* Anillo giratorio de colores alrededor del oráculo */
+    .oracle-stage::before{
         content: '';
         position: absolute;
         inset: -15px;
@@ -245,7 +245,7 @@
     @keyframes spin{ to{ transform: rotate(360deg); } }
 
     /* Estado reposo: respiración suave */
-    .hat-stage:not(.sorting):not(.sorted){
+    .oracle-stage:not(.sorting):not(.sorted){
         animation: idle-breathe 4.5s ease-in-out infinite;
     }
     @keyframes idle-breathe{
@@ -254,7 +254,7 @@
     }
 
     /* Estado PENSANDO: el halo recorre los 4 colores */
-    .hat-stage.sorting{
+    .oracle-stage.sorting{
         animation: cycle-glow 2s linear infinite;
         background: radial-gradient(circle at 50% 45%, #2a1a10 0%, #0a0604 72%);
     }
@@ -276,45 +276,52 @@
             box-shadow: 0 0 40px var(--kraken-glow), 0 0 100px var(--kraken-glow), inset 0 0 30px var(--kraken-glow);
         }
     }
-    .hat-stage.sorting::before{
+    .oracle-stage.sorting::before{
         opacity: 1;
         animation-duration: 1s;
     }
 
     /* Estado FINAL: color fijo de la casa */
-    .hat-stage.sorted{
+    .oracle-stage.sorted{
         border-color: var(--house-color);
         box-shadow: 0 0 50px var(--house-glow), 0 0 120px var(--house-glow), inset 0 0 40px var(--house-glow);
         background: radial-gradient(circle at 50% 45%, rgba(0,0,0,0.6) 0%, #050302 80%);
     }
-    .hat-stage.sorted::before{
+    .oracle-stage.sorted::before{
         opacity: .95;
         animation-duration: 9s;
         background: conic-gradient(from 0deg,
             var(--house-color), transparent 55%, var(--house-color));
     }
 
-    /* El nuevo sombrero SVG */
-    .hat-svg {
+    /* La imagen del Oráculo */
+    .oracle-img {
         width: 170px;
         height: 170px;
-        filter: drop-shadow(0 15px 15px rgba(0,0,0,0.8));
-        transition: transform .3s ease, filter .3s ease;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(212, 175, 55, 0.4);
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6);
+        /* Filtro para que parezca un artefacto antiguo y encaje con el fondo */
+        filter: sepia(0.5) contrast(1.1) brightness(0.85);
+        transition: transform .3s ease, filter .3s ease, border-color .3s ease;
         z-index: 2;
     }
 
-    .hat-stage.sorting .hat-svg{
-        animation: wobble .4s ease-in-out infinite alternate;
-        filter: drop-shadow(0 0 25px var(--house-color)) brightness(1.2);
+    .oracle-stage.sorting .oracle-img{
+        animation: float-wobble .8s ease-in-out infinite alternate;
+        filter: sepia(0.7) contrast(1.2) brightness(1.1) drop-shadow(0 0 25px var(--house-color));
+        border-color: var(--house-color);
     }
     
-    .hat-stage.sorted .hat-svg {
-        filter: drop-shadow(0 0 35px var(--house-color)) brightness(1.1);
+    .oracle-stage.sorted .oracle-img {
+        filter: sepia(0.6) contrast(1.1) brightness(1.1) drop-shadow(0 0 35px var(--house-color));
+        border-color: var(--house-color);
     }
 
-    @keyframes wobble{
-        from{ transform: rotate(-7deg) scale(1.05) translateY(-5px); }
-        to  { transform: rotate(7deg)  scale(1.05) translateY(5px); }
+    @keyframes float-wobble{
+        from{ transform: translateY(-5px) scale(1.02) rotate(-1deg); }
+        to  { transform: translateY(5px) scale(1.05) rotate(1deg); }
     }
 
     /* ---------- TEXTO DE ANUNCIO ---------- */
@@ -515,8 +522,8 @@
 
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 480px){
-        .hat-stage{ width: 200px; height: 200px; }
-        .hat-svg{ width: 130px; height: 130px; }
+        .oracle-stage{ width: 200px; height: 200px; }
+        .oracle-img{ width: 130px; height: 130px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
         h1 { font-size: 2rem; }
         .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
@@ -534,7 +541,7 @@
     <header>
         <div class="header-subtitle">La Ceremonia de Selección</div>
         <h1>¿A qué casa perteneces?</h1>
-        <p>Elige tu clase, haz clic en tu nombre y el Sombrero revelará tu destino.</p>
+        <p>Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
     </header>
 
     <div class="class-selector-container">
@@ -544,31 +551,12 @@
 
     <main class="container">
 
-        <div class="hat-area">
-            <div class="hat-stage" id="hatStage">
-                <!-- Sombrero SVG de Tres Picos -->
-                <svg class="hat-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <radialGradient id="hatGrad" cx="50%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#8a5a3c"/>
-                            <stop offset="60%" stop-color="#5c3622"/>
-                            <stop offset="100%" stop-color="#2e170c"/>
-                        </radialGradient>
-                        <radialGradient id="brimGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#4a2c16"/>
-                            <stop offset="100%" stop-color="#1f0f06"/>
-                        </radialGradient>
-                    </defs>
-                    <ellipse cx="100" cy="165" rx="80" ry="20" fill="url(#brimGrad)"/>
-                    <path d="M 20,165 Q 40,120 50,130 Q 60,160 80,165 Z" fill="#3b1f0b"/>
-                    <path d="M 180,165 Q 160,120 150,130 Q 140,160 120,165 Z" fill="#3b1f0b"/>
-                    <path d="M 100,15 C 60,20 45,80 35,135 C 50,160 80,165 100,165 C 120,165 150,160 165,135 C 155,80 140,20 100,15 Z" fill="url(#hatGrad)"/>
-                    <path d="M 45,110 Q 70,130 100,120 Q 130,130 155,110" stroke="#2a1406" stroke-width="4" fill="none" stroke-linecap="round"/>
-                    <path d="M 55,80 Q 80,100 100,90 Q 120,100 145,80" stroke="#2a1406" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path d="M 65,90 Q 80,105 90,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
-                    <path d="M 135,90 Q 120,105 110,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
-                    <path d="M 80,130 Q 100,150 120,130 Q 100,145 80,130 Z" fill="#1c0c03"/>
-                </svg>
+        <div class="oracle-area">
+            <div class="oracle-stage" id="oracleStage">
+                <!-- Imagen del Oráculo de Themis -->
+                <img class="oracle-img" 
+                     src="https://upload.wikimedia.org/wikipedia/commons/7/79/Themis_Aigeus_Antikensammlung_Berlin_F2538.jpg" 
+                     alt="Oráculo de Themis">
             </div>
             <div class="announcement" id="announcement">
                 Esperando a un alumno<span class="dots"></span>
@@ -1207,7 +1195,7 @@ const uniqueClasses = [...new Set(studentsData.map(s => s.class))].sort();
    3. REFERENCIAS DEL DOM
    ========================================================= */
 const studentGrid   = document.getElementById('studentGrid');
-const hatStage      = document.getElementById('hatStage');
+const oracleStage   = document.getElementById('oracleStage');
 const announcement  = document.getElementById('announcement');
 const flashOverlay  = document.getElementById('flashOverlay');
 const resetBtn      = document.getElementById('resetBtn');
@@ -1289,22 +1277,22 @@ function triggerSorting(student, card){
     isSorting = true;
     const house = HOUSES[student.house];
 
-    // --- Fase 1: el sombrero piensa ---
-    hatStage.classList.remove('sorted');
-    hatStage.classList.add('sorting');
+    // --- Fase 1: el oráculo piensa ---
+    oracleStage.classList.remove('sorted');
+    oracleStage.classList.add('sorting');
 
     announcement.innerHTML =
-        `El Sombrero está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span>`;
+        `El Oráculo está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span>`;
 
     // --- Fase 2: revelación ---
     setTimeout(() => {
         student.sorted = true; // Guardar estado
 
-        // El sombrero se queda con el color de la casa
-        hatStage.classList.remove('sorting');
-        hatStage.style.setProperty('--house-color', house.color);
-        hatStage.style.setProperty('--house-glow',  house.glow);
-        hatStage.classList.add('sorted');
+        // El oráculo se queda con el color de la casa
+        oracleStage.classList.remove('sorting');
+        oracleStage.style.setProperty('--house-color', house.color);
+        oracleStage.style.setProperty('--house-glow',  house.glow);
+        oracleStage.classList.add('sorted');
 
         announcement.innerHTML =
             `<strong style="color:${house.color}">${student.name}</strong>` +
@@ -1333,7 +1321,7 @@ function triggerSorting(student, card){
    8. PARTÍCULAS
    ========================================================= */
 function burstParticles(color){
-    const rect = hatStage.getBoundingClientRect();
+    const rect = oracleStage.getBoundingClientRect();
     const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
 
@@ -1377,9 +1365,9 @@ resetBtn.addEventListener('click', () => {
         }
     });
 
-    hatStage.classList.remove('sorted');
-    hatStage.style.removeProperty('--house-color');
-    hatStage.style.removeProperty('--house-glow');
+    oracleStage.classList.remove('sorted');
+    oracleStage.style.removeProperty('--house-color');
+    oracleStage.style.removeProperty('--house-glow');
 
     announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
     renderStudents();
