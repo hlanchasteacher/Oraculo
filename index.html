@@ -1299,6 +1299,12 @@ function triggerSorting(student, card){
     isSorting = true;
     const house = HOUSES[student.house];
 
+    // --- EL SCROLL HACIA ARRIBA ---
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
     // Ocultar escudo anterior (o neutro) durante la animación
     crestContainer.classList.remove('visible');
 
