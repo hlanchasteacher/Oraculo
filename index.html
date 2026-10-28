@@ -104,7 +104,7 @@
         position: relative;
         z-index: 1;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         max-width: 800px;
         animation: fadeInDown 1.5s ease-out;
     }
@@ -120,13 +120,13 @@
     }
 
     h1{
-        font-size: clamp(2rem, 5vw, 3.8rem);
+        font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 900;
         letter-spacing: .05em;
         text-transform: uppercase;
         color: var(--gold);
         text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0,0,0,0.9);
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         line-height: 1.1;
     }
 
@@ -144,16 +144,63 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ---------- SELECTOR DE CLASE ---------- */
+    .class-selector-container {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+
+    .class-selector-container label {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        color: var(--gold);
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+    }
+
+    #classSelect {
+        background: #1a1512;
+        color: var(--text-light);
+        font-family: 'MedievalSharp', cursive;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--gold);
+        border-radius: 4px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    #classSelect:hover, #classSelect:focus {
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        border-color: #fce38a;
+    }
+
+    #classSelect option {
+        background: #1a1512;
+        color: var(--text-light);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
     /* ---------- LAYOUT ---------- */
     .container{
         position: relative;
         z-index: 1;
         width: 100%;
-        max-width: 1050px;
+        max-width: 1100px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 3rem;
+        gap: 2.5rem;
     }
 
     /* ---------- ESCENARIO DEL SOMBRERO ---------- */
@@ -162,7 +209,7 @@
         flex-direction: column;
         align-items: center;
         gap: 2rem;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
     }
 
     .hat-stage{
@@ -298,7 +345,7 @@
     .student-grid{
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-        gap: 1.4rem;
+        gap: 1.2rem;
         width: 100%;
     }
 
@@ -309,18 +356,17 @@
         flex-direction: column;
         align-items: center;
         gap: .75rem;
-        padding: 1.5rem 1rem;
+        padding: 1.3rem 1rem;
         border-radius: 12px;
         cursor: pointer;
-        /* Estilo de pergamino oscuro / piedra */
         background: linear-gradient(160deg, #231b15 0%, #110c08 100%);
         border: 1px solid rgba(212, 175, 55, 0.15);
         box-shadow: 0 8px 20px rgba(0, 0, 0, .6);
         transition: transform .3s cubic-bezier(.25, .8, .25, 1),
                     border-color .3s ease,
                     box-shadow .3s ease;
-        animation: card-in .8s cubic-bezier(.2, .8, .25, 1) backwards;
-        animation-delay: calc(var(--i) * 80ms);
+        animation: card-in .6s cubic-bezier(.2, .8, .25, 1) backwards;
+        animation-delay: calc(var(--i) * 30ms);
     }
 
     @keyframes card-in{
@@ -350,12 +396,12 @@
     }
 
     .student-avatar{
-        width: 66px;
-        height: 66px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         display: grid;
         place-items: center;
-        font-size: 1.9rem;
+        font-size: 1.8rem;
         background: rgba(0, 0, 0, .4);
         border: 2px solid rgba(212, 175, 55, .2);
         transition: all .45s cubic-bezier(.175, .885, .32, 1.275);
@@ -364,21 +410,21 @@
     .student-name{
         font-family: 'MedievalSharp', cursive;
         color: var(--text-light);
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         text-align: center;
-        line-height: 1.25;
+        line-height: 1.2;
         text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .house-badge{
         margin-top: auto;
-        padding: .4rem 1rem;
+        padding: .35rem .8rem;
         border-radius: 4px;
-        font-size: .75rem;
+        font-size: .7rem;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: .15em;
+        letter-spacing: .1em;
         background: rgba(0, 0, 0, .5);
         color: var(--muted);
         border: 1px solid rgba(255, 255, 255, .05);
@@ -423,6 +469,7 @@
         letter-spacing: .1em;
         transition: all .3s ease;
         text-transform: uppercase;
+        margin-top: 1rem;
     }
     .reset-btn:hover{
         background: rgba(212, 175, 55, .15);
@@ -472,6 +519,7 @@
         .hat-svg{ width: 130px; height: 130px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
         h1 { font-size: 2rem; }
+        .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
     }
 </style>
 </head>
@@ -486,8 +534,13 @@
     <header>
         <div class="header-subtitle">La Ceremonia de Selección</div>
         <h1>¿A qué casa perteneces?</h1>
-        <p>Haz clic en un alumno y el Sombrero revelará su destino.</p>
+        <p>Elige tu clase, haz clic en tu nombre y el Sombrero revelará tu destino.</p>
     </header>
+
+    <div class="class-selector-container">
+        <label for="classSelect">Selecciona tu clase:</label>
+        <select id="classSelect"></select>
+    </div>
 
     <main class="container">
 
@@ -496,7 +549,6 @@
                 <!-- Sombrero SVG de Tres Picos -->
                 <svg class="hat-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <!-- Gradiente para dar volumen al cuero -->
                         <radialGradient id="hatGrad" cx="50%" cy="30%" r="70%">
                             <stop offset="0%" stop-color="#8a5a3c"/>
                             <stop offset="60%" stop-color="#5c3622"/>
@@ -507,26 +559,14 @@
                             <stop offset="100%" stop-color="#1f0f06"/>
                         </radialGradient>
                     </defs>
-
-                    <!-- Base / Ala del sombrero -->
                     <ellipse cx="100" cy="165" rx="80" ry="20" fill="url(#brimGrad)"/>
-                    <!-- Pico izquierdo -->
                     <path d="M 20,165 Q 40,120 50,130 Q 60,160 80,165 Z" fill="#3b1f0b"/>
-                    <!-- Pico derecho -->
                     <path d="M 180,165 Q 160,120 150,130 Q 140,160 120,165 Z" fill="#3b1f0b"/>
-
-                    <!-- Cuerpo principal del sombrero (el pico central) -->
                     <path d="M 100,15 C 60,20 45,80 35,135 C 50,160 80,165 100,165 C 120,165 150,160 165,135 C 155,80 140,20 100,15 Z" fill="url(#hatGrad)"/>
-
-                    <!-- Arrugas y pliegues -->
                     <path d="M 45,110 Q 70,130 100,120 Q 130,130 155,110" stroke="#2a1406" stroke-width="4" fill="none" stroke-linecap="round"/>
                     <path d="M 55,80 Q 80,100 100,90 Q 120,100 145,80" stroke="#2a1406" stroke-width="3" fill="none" stroke-linecap="round"/>
-
-                    <!-- La cara: ojos y boca -->
                     <path d="M 65,90 Q 80,105 90,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
                     <path d="M 135,90 Q 120,105 110,95" stroke="#1c0c03" stroke-width="5" fill="none" stroke-linecap="round"/>
-                    
-                    <!-- Abertura de la boca -->
                     <path d="M 80,130 Q 100,150 120,130 Q 100,145 80,130 Z" fill="#1c0c03"/>
                 </svg>
             </div>
@@ -537,13 +577,589 @@
 
         <div class="student-grid" id="studentGrid"></div>
 
-        <button class="reset-btn" id="resetBtn">↺ Reiniciar ceremonia</button>
+        <button class="reset-btn" id="resetBtn">↺ Reiniciar ceremonia actual</button>
 
     </main>
 
 <script>
 /* =========================================================
-   1. CONFIGURACIÓN DE LAS CASAS
+   1. DATOS DE LOS ALUMNOS (Extraídos del CSV)
+   ========================================================= */
+const csvData = `House,Student,Class
+DRAGON,"Anaya Mayoral, Sofía",1BAA
+CENTAURO,"Bautista Hidalgo, Alicia",1BAA
+PEGASUS,"Bay Rodríguez, Olivia",1BAA
+KRAKEN,"Casla de la Puente, Iván",1BAA
+PEGASUS,"Delgado Dulinsky, Enrique",1BAA
+DRAGON,"Escribano Argente, Arturo",1BAA
+KRAKEN,"Estalrich Martin Vazquez, Carla",1BAA
+CENTAURO,"Iglesias Martínez, Miguel",1BAA
+DRAGON,"Leal Díaz, Xavier",1BAA
+PEGASUS,"Lecubarri Muro, Victoria",1BAA
+KRAKEN,"Martínez Espantoso, Aitana",1BAA
+CENTAURO,"Nikolaeva Asparuhova, Mihaela",1BAA
+PEGASUS,"Polo Vázquez, Héctor",1BAA
+KRAKEN,"Reino Talavera, Esteban",1BAA
+DRAGON,"Rossell Torres, Jan",1BAA
+DRAGON,"Sotoca García, África",1BAA
+PEGASUS,"Valls Forne, Karla",1BAA
+KRAKEN,"Vela Bernabé, Olivia",1BAA
+CENTAURO,"Christou Carrasquel, Alessandro",1ESA
+KRAKEN,"García Rayos, Sofía",1ESA
+PEGASUS,"Hellman Ortega, David Olof",1ESA
+PEGASUS,"Khapsas , Leon",1ESA
+CENTAURO,"Lara Morales, Daniel",1ESA
+DRAGON,"Merino Khamidova, Noelia",1ESA
+DRAGON,"Migueláñez Roura, Alejandro",1ESA
+KRAKEN,"Monreal Bardales, Adrián",1ESA
+CENTAURO,"Navarro Rodríguez, Darío",1ESA
+DRAGON,"Ortiz Pérez, Lola",1ESA
+KRAKEN,"Rodríguez Díez, Micaela",1ESA
+PEGASUS,"Santiago Palomares, Diego",1ESA
+DRAGON,"Sarabia López de Dicastillo, Joaquín",1ESA
+PEGASUS,"Serrano Barrientos, Eva",1ESA
+KRAKEN,"Streltsov , Leonel",1ESA
+KRAKEN,"Tineo Cajo, Gianell Franci",1ESA
+DRAGON,"Uriarte Saitos, Gabriel",1ESA
+PEGASUS,"Almoutaz Ahmed Ibrahim , Almonzer",1ESB
+CENTAURO,"Anand , Ganeev",1ESB
+KRAKEN,"Arias García, Alex",1ESB
+PEGASUS,"Benedé Rodríguez, Leo",1ESB
+KRAKEN,"Chabolla , Santi Iñigo",1ESB
+CENTAURO,"Francois Vanholsbeeck, Eloan",1ESB
+CENTAURO,"Haidar , Haidar",1ESB
+PEGASUS,"López Vázquez, Aitor",1ESB
+DRAGON,"Martínez Esteban, Lourdes Sofía",1ESB
+KRAKEN,"Ortega Galindo, Ángel",1ESB
+CENTAURO,"Palencia Benitez, Arturo",1ESB
+KRAKEN,"Pérez García, Valentina",1ESB
+KRAKEN,"Pola Valle, María",1ESB
+DRAGON,"Praena Peña, Martina",1ESB
+KRAKEN,"Rodríguez Díez, Manuel",1ESB
+DRAGON,"Roy , Shresth",1ESB
+CENTAURO,"Sánchez Vázquez, Samuel",1ESB
+PEGASUS,"Trillo Vicente, Noa",1ESB
+PEGASUS,"Tur Jiménez, África",1ESB
+DRAGON,"Yeung , Kasen Bliss",1ESB
+DRAGON,"Arias Míguez, Bruno",1IBB
+KRAKEN,"Bozzer Molina, Alma",1IBB
+CENTAURO,"Carballo Carmona, Ana",1IBB
+KRAKEN,"Dick , Samuel",1IBB
+PEGASUS,"Dozio , Jacopo Nardo",1IBB
+DRAGON,"Garcia Asman, Marcos",1IBB
+PEGASUS,"Hallenborg Donaire, Marianne Greta",1IBB
+KRAKEN,"Huang , Ruixuan",1IBB
+CENTAURO,"Jara Vidal, Mariana Valentina",1IBB
+DRAGON,"Ketani , Sami Emil",1IBB
+CENTAURO,"Lacasa García-Calvo, Micaela",1IBB
+KRAKEN,"Martín Nuño, Aitana",1IBB
+CENTAURO,"Rattazzi Aranda, Ignacio",1IBB
+DRAGON,"Sánchez Fernández, Carlos",1IBB
+PEGASUS,"Sierra Palacios, Felipe",1IBB
+PEGASUS,"Vilhunen , Henri Mikael",1IBB
+KRAKEN,"Young Vazquez, Matthew Thomas",1IBB
+KRAKEN,"Alvaro Sastre, Lucia",1IBC
+PEGASUS,"Blaas Hokes, Lucia",1IBC
+KRAKEN,"Castañeda Rodriguez, Violeta",1IBC
+CENTAURO,"Copello Barbosa, Leticia",1IBC
+KRAKEN,"Extremera Peris, Daniel",1IBC
+PEGASUS,"Fernandez Huet, Aitana",1IBC
+DRAGON,"Gallego Alfaro, Noelia",1IBC
+KRAKEN,"Garcia Di Vietro, Candela",1IBC
+PEGASUS,"Garcia Izquierdo, Sofia",1IBC
+CENTAURO,"Gil Celorio, Andrea",1IBC
+DRAGON,"Gonzalez Berceruelo, Lara",1IBC
+PEGASUS,"Guerrero Rodriguez, Irene",1IBC
+DRAGON,"Gur , Dylan Berco",1IBC
+DRAGON,"Gur , Emily Haya",1IBC
+CENTAURO,"Herrero Rodriguez, David",1IBC
+CENTAURO,"Li , Baoheng",1IBC
+CENTAURO,"Liñan Alonso, Naiara",1IBC
+PEGASUS,"Lobón Hernández, Cristina",1IBC
+DRAGON,"Martín Boquete, Daniel Ángel",1IBC
+KRAKEN,"Martínez Goycoolea, Óscar",1IBC
+DRAGON,"Musaroche , Precious Alex",1IBC
+CENTAURO,"Pradilla Uceta, Aroa",1IBC
+KRAKEN,"Risquez Garcia, Leyre",1IBC
+CENTAURO,"Rodríguez Hidalgo, María del Carmen",1IBC
+PEGASUS,"Rosillo Moder, Hugo",1IBC
+PEGASUS,"Rueda Civantos, Marta",1IBC
+PEGASUS,"Samiayan , Rayhaneh",1IBC
+CENTAURO,"Sanchez Salinero, Bruno",1IBC
+KRAKEN,"Teruel Espigares, Claudia",1IBC
+KRAKEN,"Torres Martínez, Hugo",1IBC
+DRAGON,"Tudic , Samuel",1IBC
+KRAKEN,"Alejo Habibi, Ian",1INA
+DRAGON,"Cister Fernandez, Paola",1INA
+KRAKEN,"Cure de Oliveira, Camila",1INA
+PEGASUS,"Gutiérrez Navalón, África",1INA
+CENTAURO,"Juanes Garcia, Alejandro",1INA
+PEGASUS,"Maimir Borisova, Alma",1INA
+DRAGON,"Taboada Santisteban, Carlota",1INA
+CENTAURO,"Colom Martin, Jaime",1PRA
+CENTAURO,"Forner Romero, Nora",1PRA
+KRAKEN,"Gracia Sánchez, Luca de",1PRA
+PEGASUS,"Iglesias Menendez, Victoria",1PRA
+DRAGON,"Jiménez Sánchez-Ocaña, Pedro",1PRA
+DRAGON,"Jove Guzman, Paolo",1PRA
+PEGASUS,"Liu , Ying",1PRA
+PEGASUS,"Martín Hernández, Mateo",1PRA
+CENTAURO,"Moreno Gutiérrez, Mario",1PRA
+KRAKEN,"Pinna Rivero, Jana",1PRA
+KRAKEN,"Sánchez Díaz, Amanda",1PRA
+DRAGON,"Tena Ristori, Enzo",1PRA
+CENTAURO,"Velázquez Ibáñez, Enzo",1PRA
+CENTAURO,"Ais Luengo, Deiver",1PRB
+PEGASUS,"Álvarez Alonso, Enzo",1PRB
+CENTAURO,"Bejarano Juves, Gabriela",1PRB
+PEGASUS,"Calle Guijarro, Ixeia",1PRB
+KRAKEN,"Cooper , Lukas Julian",1PRB
+DRAGON,"Kallou , Adam",1PRB
+DRAGON,"López Parcet, Paola",1PRB
+DRAGON,"Luciano Fernández, Dafne",1PRB
+KRAKEN,"Martín López, Tirso",1PRB
+KRAKEN,"Rodríguez López, Gabriela",1PRB
+KRAKEN,"Salvador Nieto, Eneko",1PRB
+PEGASUS,"Sanavia Dueñas, Vega",1PRB
+CENTAURO,"Serrano Marín, Olivia",1PRB
+DRAGON,"Blanco Rodriguez, Gabriela",2BAA
+KRAKEN,"Blázquez Bardera, Nuria",2BAA
+DRAGON,"Calle Vázquez, Carla",2BAA
+DRAGON,"Campo Galán, Marcos del",2BAA
+CENTAURO,"D´Innocenti Sánchez, Valeria",2BAA
+CENTAURO,"Escobar Moreno, Nicolás",2BAA
+CENTAURO,"García De la Fuente, Inés Fu Wei",2BAA
+PEGASUS,"García Sánchez, Lucía",2BAA
+KRAKEN,"Gómez Gallego, Marcos",2BAA
+DRAGON,"González Jurado, Carolina",2BAA
+PEGASUS,"Jaquete Redruello, Jorge Javier",2BAA
+CENTAURO,"Jiménez Valentín, Jorge",2BAA
+DRAGON,"López de Pablo Martín, Noa",2BAA
+KRAKEN,"López Hernández, Patricia",2BAA
+KRAKEN,"Martínez Espantoso, Aarón",2BAA
+PEGASUS,"Martínez García, Darío",2BAA
+CENTAURO,"Monreal Sorribas, Enrique",2BAA
+PEGASUS,"Moreno Sola, Zoe Duo",2BAA
+DRAGON,"Núñez Hernández, Álvaro",2BAA
+KRAKEN,"Omoragbon Hernando, Cristina",2BAA
+CENTAURO,"Peña Martínez, Jorge",2BAA
+DRAGON,"Puente Cascado, Marcos",2BAA
+KRAKEN,"Puente García, Mateo de la",2BAA
+PEGASUS,"Redruello González, Itxaso",2BAA
+DRAGON,"Rodríguez Piñero, Jaime",2BAA
+KRAKEN,"Rodríguez Torrecilla, Miguel",2BAA
+PEGASUS,"Romera Lucas, Marco",2BAA
+PEGASUS,"Rueda Pizarro, Mara",2BAA
+CENTAURO,"Vila García, Daniel",2BAA
+KRAKEN,"Villani Gil, Mirco",2BAA
+PEGASUS,"Villanueva Pallarés, Mario",2BAA
+CENTAURO,"Allegrini Rodríguez-Madridejos, Berta",2ESA
+KRAKEN,"Alonso Toledo, Rubén",2ESA
+KRAKEN,"Álvaro Sastre, Martín",2ESA
+DRAGON,"Anaya Mayoral, Paola",2ESA
+DRAGON,"Baranello , Etienne Samuel Joel",2ESA
+PEGASUS,"Chen Lin, Zhixuan",2ESA
+KRAKEN,"Diaz Gomez, Violeta",2ESA
+CENTAURO,"Esibe Cinta, Diana",2ESA
+CENTAURO,"Fernández Campa, Raúl",2ESA
+PEGASUS,"Fernández Pablo, Darío",2ESA
+KRAKEN,"Fernández Rico, Hugo",2ESA
+KRAKEN,"González Martín, Jesús Manuel",2ESA
+PEGASUS,"López Garrido, Verónica Sara",2ESA
+DRAGON,"Platas García, Lope",2ESA
+CENTAURO,"Rattazzi Aranda, Benjamín",2ESA
+CENTAURO,"Rodríguez Rodríguez, Cástor",2ESA
+PEGASUS,"Tudic , Marcos",2ESA
+PEGASUS,"Uddin Sidoqua, Tahmid",2ESA
+PEGASUS,"Almoutaz Ahmed Ibrahim , Eyad",2ESB
+DRAGON,"Balaian , Kira",2ESB
+CENTAURO,"Bouvier Puerta, Ismael",2ESB
+DRAGON,"Cabrera Varela, Marco",2ESB
+DRAGON,"Campo Galán, Carla del",2ESB
+PEGASUS,"Carabali Fernández, Kyle",2ESB
+CENTAURO,"Escobar Moreno, Jimena",2ESB
+DRAGON,"Flores Boluda, Samuel",2ESB
+KRAKEN,"García Castañeda, Nilo",2ESB
+KRAKEN,"García Igelmo, Beltrán",2ESB
+CENTAURO,"Gómez de la Gama, Simón",2ESB
+CENTAURO,"Haidar , Ghazal",2ESB
+DRAGON,"Kushner , Eva",2ESB
+PEGASUS,"Mazelev , Dmitriy",2ESB
+PEGASUS,"Muñoz Terciado, David",2ESB
+PEGASUS,"Quiñonez Herrera, Daniel Nicolás",2ESB
+CENTAURO,"Raza , Syeda Zara",2ESB
+KRAKEN,"Rodríguez Torrecilla, Mauro",2ESB
+KRAKEN,"Santacruz Rubio, Antonio",2ESB
+CENTAURO,"Shubaeva , Elizaveta",2ESB
+KRAKEN,"Xie , Yutong",2ESB
+DRAGON,"AlChoumari Al Garmakani, Mazen",2IBB
+CENTAURO,"Ama Maté, Nicolás del",2IBB
+PEGASUS,"Anselmetti , Orlando",2IBB
+CENTAURO,"Calvín Corral, Paloma",2IBB
+DRAGON,"Canencia Diaz, Irene",2IBB
+KRAKEN,"Cardenas de Val, Cristina",2IBB
+DRAGON,"Carvalho Velhanos, Ellis Gabriela De",2IBB
+CENTAURO,"Castellanos Baena, Ada",2IBB
+KRAKEN,"Di Stefano , Elina Luz",2IBB
+KRAKEN,"Díez Alonso, Javier",2IBB
+PEGASUS,"Larrodera De la Calle, Marina",2IBB
+CENTAURO,"Li , Yunfeng",2IBB
+KRAKEN,"Malagutti Koga, Mariana",2IBB
+DRAGON,"Merayo Moreno, Ana",2IBB
+PEGASUS,"Muñoz Carcelén, Alejandro",2IBB
+CENTAURO,"Pérez Cordobés, Carmela",2IBB
+PEGASUS,"Pérez Oviedo, Simón",2IBB
+CENTAURO,"Pishevar , Sam",2IBB
+DRAGON,"Roy , Samrridhi",2IBB
+PEGASUS,"Sierra De los Santos, Victoria Eugenia",2IBB
+KRAKEN,"Zalve Kramer, Diego Paul",2IBB
+PEGASUS,"Zhao , Chengjie",2IBB
+PEGASUS,"Almoutaz Ahmed Ibrahim , Ahmed",2IBC
+PEGASUS,"Almoutaz Ahmed Ibrahim , Amgad",2IBC
+CENTAURO,"Chen Lan, Sara",2IBC
+DRAGON,"Collado Taveras, Ailsa",2IBC
+CENTAURO,"Díaz , Martina",2IBC
+KRAKEN,"Galán Parra, Alejandro",2IBC
+PEGASUS,"Lobón Hernández, Lucía",2IBC
+KRAKEN,"Macías Abitbol, Audrey",2IBC
+CENTAURO,"Maestre Pérez, Paula",2IBC
+DRAGON,"Malca Espinosa, Arantza Sofia",2IBC
+KRAKEN,"Plaza Martín, Enrique",2IBC
+PEGASUS,"Tudic , David",2IBC
+CENTAURO,"Brandao Peña, Tristán",2INA
+DRAGON,"Degen Sebban, Otis",2INA
+CENTAURO,"Fernández Silva, Daniela",2INA
+DRAGON,"Fernández Tshagharyan, Leo",2INA
+DRAGON,"Fernández Tshagharyan, Martín",2INA
+KRAKEN,"García Nieto, Bosco",2INA
+KRAKEN,"Gracia Sanchez, Dario de",2INA
+PEGASUS,"Lerma Garcia, Martín",2INA
+KRAKEN,"Méndez Martín, Cristina",2INA
+CENTAURO,"Pacheco Gómez, Alejandra",2INA
+DRAGON,"Rivera Pérez, Luca",2INA
+PEGASUS,"Ruiz Halkema, Erik",2INA
+KRAKEN,"Ruiz-Valdepeñas Guerrero, Alexandro",2INA
+PEGASUS,"Sanavia Dueñas, Simón",2INA
+PEGASUS,"Collado Ruiz, Jaziel Antonio",2PRA
+KRAKEN,"Dick , Matthias",2PRA
+DRAGON,"Jove Guzman, Vitoria",2PRA
+KRAKEN,"Juvonen , Julia",2PRA
+KRAKEN,"Lavreniuk , Maria Igorivna",2PRA
+PEGASUS,"Liu , Yiyi",2PRA
+CENTAURO,"López Flores, Guillermo",2PRA
+CENTAURO,"Motta ., Lorenzo",2PRA
+KRAKEN,"Ortega Galindo, Gabriela",2PRA
+DRAGON,"Sarabia López de Dicastillo, Jaime",2PRA
+PEGASUS,"Serrano Barrientos, Mario",2PRA
+CENTAURO,"Zandstra Morgades, Daniel",2PRA
+KRAKEN,"Zapata Alfaro, Marta Manuela",2PRA
+DRAGON,"Aguilera Matías, Martín",2PRB
+PEGASUS,"Casco Alonso, Alexander",2PRB
+PEGASUS,"Cordero Fernandez, Iria",2PRB
+CENTAURO,"Gómez Cogolludo, Thiago",2PRB
+KRAKEN,"Hernández Menchero, Alejandro",2PRB
+CENTAURO,"Holgado Ruiz, Adriana",2PRB
+KRAKEN,"Jiménez Georgieva, Sofía",2PRB
+CENTAURO,"Lara Morales, Martín",2PRB
+DRAGON,"Ramos Bracho, Diego",2PRB
+KRAKEN,"Rodriguez León, Luca",2PRB
+PEGASUS,"Sauras López, Blanca",2PRB
+DRAGON,"Zambrano Guerrero, Marcela",2PRB
+CENTAURO,"Bazo Domínguez, Julio Alexandr",3ESA
+KRAKEN,"Cañadas García, Daniela",3ESA
+KRAKEN,"Diez Sanchez, Mia",3ESA
+PEGASUS,"Dougan Nsue, Denzel",3ESA
+DRAGON,"Garcia Sorando, Carlota",3ESA
+DRAGON,"Grosanu , Serena Raisa",3ESA
+CENTAURO,"Guereta Iakovlev, Dmitriy",3ESA
+DRAGON,"Hunter Roig, Daniel",3ESA
+PEGASUS,"Juan Duque, Rodrigo de",3ESA
+CENTAURO,"López Luttra, Nicolas Raúl",3ESA
+CENTAURO,"Luengo Vela, Lúa",3ESA
+KRAKEN,"Mateos Majan, Claudia",3ESA
+DRAGON,"Migueláñez Roura, Nadia",3ESA
+DRAGON,"Montes González, Adrián",3ESA
+CENTAURO,"Núñez-Barranco Ayerra, Enzo",3ESA
+PEGASUS,"Romera Lucas, Rodrigo",3ESA
+KRAKEN,"Streltsova , Felitsia",3ESA
+KRAKEN,"Torres Martínez, Paula",3ESA
+PEGASUS,"Vilhunen , Sara Isabel",3ESA
+PEGASUS,"Ansón Rico, Júlia",3ESB
+DRAGON,"Arias Míguez, Olivia",3ESB
+CENTAURO,"Barrios Unzueta, Nahia",3ESB
+KRAKEN,"Blázquez Bardera, Carlos",3ESB
+KRAKEN,"Dick , Johannes",3ESB
+CENTAURO,"Forner Romero, Sara Inés",3ESB
+DRAGON,"Gallego Melendez, Sofia",3ESB
+PEGASUS,"Gómez Guerrero, Virgilio Alejandro",3ESB
+DRAGON,"Granero Castellanos, Zoe",3ESB
+KRAKEN,"Hardison , Rebecca",3ESB
+PEGASUS,"Hellman Ortega, Víctor Olof",3ESB
+PEGASUS,"Hudson , Anna",3ESB
+CENTAURO,"Levin , Meriem India",3ESB
+DRAGON,"Luque Donadio, Agustín",3ESB
+CENTAURO,"Martinez Colunga, Vito",3ESB
+PEGASUS,"Neyt Rastrollo, Nerea",3ESB
+KRAKEN,"Ochoa Somoza, Daniel",3ESB
+KRAKEN,"Plaza Martín, Julieta",3ESB
+PEGASUS,"Sall , Adama Ellen",3ESB
+CENTAURO,"Vila García, Víctor",3ESB
+DRAGON,"Wong Montero, Samuel",3ESB
+DRAGON,"Carracedo Falcao, Claudia",3INA
+PEGASUS,"Díaz Díaz, Ariadna",3INA
+KRAKEN,"Garaizar Villarejo, Julio",3INA
+PEGASUS,"García Sánchez, Vega",3INA
+DRAGON,"Gisbert Torras, Carla",3INA
+DRAGON,"Gnecco Rocha, Gabriela",3INA
+PEGASUS,"González Díez, Lucas",3INA
+CENTAURO,"Juanes García, Miguel Ángel",3INA
+KRAKEN,"Méndez Martín, Adriana",3INA
+PEGASUS,"Montalvo Lemus, Luca",3INA
+CENTAURO,"Motta ., Isabel",3INA
+KRAKEN,"Pinna Rivero, Lola",3INA
+CENTAURO,"Rocillo Pedrera, Carlos",3INA
+KRAKEN,"Zhang Lee, Laurance",3INA
+DRAGON,"García Mollica, Gaia",3INB
+CENTAURO,"Gordo Sanz, Daniel",3INB
+DRAGON,"Jiménez Sánchez-Ocaña, Jara",3INB
+KRAKEN,"Lin Xu , Ambar",3INB
+CENTAURO,"Mariscal Merino, Luca",3INB
+PEGASUS,"Martin Pardo, Marina",3INB
+CENTAURO,"Merino Martínez, Covadonga",3INB
+DRAGON,"Peñaranda Vivas, Emma",3INB
+KRAKEN,"Pérez Fernández, Roi",3INB
+PEGASUS,"Pesier Morte, Léonard",3INB
+PEGASUS,"Pirolli Lisbona, Matteo",3INB
+DRAGON,"Sainz Ruiz, Laia",3INB
+KRAKEN,"Zingales Molina, Chiara Vittoria",3INB
+DRAGON,"Aioanei , Elian Dominic",3PRA
+PEGASUS,"Burgos Martín, Gael",3PRA
+DRAGON,"Cespedes-Lopez Triviño, Martina",3PRA
+CENTAURO,"Ferreira Rodríguez, Liam",3PRA
+DRAGON,"Grosanu , Ayan Liviu",3PRA
+CENTAURO,"Liceras Revuelta, Gadea",3PRA
+PEGASUS,"Liu , Yue",3PRA
+PEGASUS,"López Vázquez, Adrián",3PRA
+KRAKEN,"Martín López, Flavia",3PRA
+CENTAURO,"Martinez Aguirre, Jorge",3PRA
+KRAKEN,"Ocaña Vázquez, Leo",3PRA
+DRAGON,"Piñal Zhu, Valentina del",3PRA
+CENTAURO,"Porres Cruz, Alejandro de",3PRA
+PEGASUS,"Salguero Vicente, Valeria",3PRA
+KRAKEN,"Sørensen-Markovic Molina, Milos",3PRA
+DRAGON,"Suárez Merino, Alicia",3PRA
+CENTAURO,"Varea Sánchez, Diego",3PRA
+KRAKEN,"Zapata Alfaro, Óscar",3PRA
+PEGASUS,"Almoutaz Ahmed Ibrahim , Marwan",3PRB
+DRAGON,"Barbero Kuramshyna, Jesús",3PRB
+KRAKEN,"Boó Romero, Mateo",3PRB
+DRAGON,"Cebrián Mendivil, Leo",3PRB
+KRAKEN,"Cooper , Theodore Jordan",3PRB
+PEGASUS,"Cuevas , Valentina",3PRB
+CENTAURO,"Elbanhawi El Geziri, Rima",3PRB
+KRAKEN,"García Castañeda, Alan",3PRB
+CENTAURO,"Herrero Olmos, Saúl",3PRB
+DRAGON,"Kallou Zemmouri, Maryam",3PRB
+CENTAURO,"Navarro Rodríguez, Vera",3PRB
+CENTAURO,"Peñalver González, Leo",3PRB
+DRAGON,"Reyes McLaughlin, Kaiden",3PRB
+PEGASUS,"Sánchez Cano, Enzo",3PRB
+KRAKEN,"Tildsley Arroyo, Anne",3PRB
+PEGASUS,"Tur Jiménez, Dana",3PRB
+CENTAURO,"Yoo , Seojun",3PRB
+DRAGON,"Abia Cuadrado, Nicolás Ricardo",4ESA
+PEGASUS,"Almoutaz Ahmed Ibrahim , Mohab",4ESA
+CENTAURO,"Arrebola Morales, Adriana",4ESA
+DRAGON,"Balaian , Artem",4ESA
+KRAKEN,"Díez Alonso, Pedro",4ESA
+KRAKEN,"Diez Sanchez, Daniela",4ESA
+PEGASUS,"Dougan Nsue, Rianne Nadiana",4ESA
+KRAKEN,"García Blasco, Lucía",4ESA
+CENTAURO,"Gibbon Alonso, José-Robert",4ESA
+PEGASUS,"Gimenes Ideriha, Laila",4ESA
+DRAGON,"Ignat Bodi, Chaqueline Alexia",4ESA
+CENTAURO,"Martón González, Jorge",4ESA
+PEGASUS,"Pallarés González, Héctor",4ESA
+DRAGON,"Platas García, Gabriel",4ESA
+CENTAURO,"Rizzi , Daniel",4ESA
+KRAKEN,"Sánchez Berrocoso, Abraham",4ESA
+DRAGON,"Sanchez Minguez, Lorenzo",4ESA
+KRAKEN,"Sanchez Valerio, Carla",4ESA
+KRAKEN,"Sanchez Valerio, Javier",4ESA
+CENTAURO,"Santiago Silveira, Sofía",4ESA
+KRAKEN,"Seguido Castaño, Irene",4ESA
+CENTAURO,"Yaremiy , Alejandro Ivan",4ESA
+DRAGON,"Bartolomé Juárez, Guillermo",4ESB
+CENTAURO,"Bouvier Puerta, Nelson",4ESB
+PEGASUS,"Castán Martínez, Daniela",4ESB
+CENTAURO,"Christou Carrasquel, Fiorella",4ESB
+DRAGON,"Dorado Palacio, Ángela",4ESB
+KRAKEN,"Fernández Acosta, Nicolás",4ESB
+PEGASUS,"Fernández Pablo, Daniel",4ESB
+CENTAURO,"García Moreno, Jaime",4ESB
+KRAKEN,"Jellal , Omar",4ESB
+DRAGON,"Jiménez Estévez, Guillermo",4ESB
+DRAGON,"Leoveanu , Stefan",4ESB
+PEGASUS,"López Garrido, Adrián Juan",4ESB
+PEGASUS,"Lopez Silvestre, Romeo",4ESB
+KRAKEN,"López Zhukov, Pedro",4ESB
+DRAGON,"Pascua Pla, Izan Jian",4ESB
+PEGASUS,"Rojas Pérez, Noemí",4ESB
+CENTAURO,"Sáez Esteban, Carlos",4ESB
+CENTAURO,"Ullate Sánchez, Aarón",4ESB
+CENTAURO,"Varea Sánchez, Aitor",4ESB
+DRAGON,"Walker Martínez, Olivia Heather",4ESB
+KRAKEN,"Zalve Kramer, Jan",4ESB
+KRAKEN,"Zalve Kramer, Mara",4ESB
+DRAGON,"Aguado Estefanell, Javier",4INA
+PEGASUS,"Aicart Mariño, Gala",4INA
+KRAKEN,"Campo Bogatov, Adrián del",4INA
+CENTAURO,"Colom Martín, Ignacio",4INA
+DRAGON,"Coomonte Collins, Fénix",4INA
+PEGASUS,"Gutiérrez Navalón, Maya",4INA
+DRAGON,"Kallou , Amin",4INA
+PEGASUS,"Martín Martínez, Leo",4INA
+CENTAURO,"Puerta Domínguez, Lucía de la",4INA
+CENTAURO,"Roig Ibánez Sánchez, Gonzalo De",4INA
+KRAKEN,"Zapata Alfaro, Miranda",4INA
+KRAKEN,"Zurbrugg Taveras, Anya",4INA
+KRAKEN,"Bueno Huelamo, Luna",4INB
+DRAGON,"Campos Pírez, Moana",4INB
+PEGASUS,"Carvalho Casadei, Maya",4INB
+DRAGON,"Cespedes López-Triviño, María",4INB
+KRAKEN,"Dick , Clara",4INB
+PEGASUS,"Esteban Vicente, Marcel",4INB
+DRAGON,"Freire Polit, Vega",4INB
+CENTAURO,"López de Lucas, Saúl",4INB
+KRAKEN,"Martín Blasco, Manuela",4INB
+CENTAURO,"Peromingo , Tiara",4INB
+PEGASUS,"Ruiz Halkema, Naya",4INB
+CENTAURO,"Zandstra Morgades, Nicolás",4INB
+DRAGON,"Aguado Estefanell, Jon",4PRA
+PEGASUS,"Caicedo Rendon, Mariana Andrea",4PRA
+PEGASUS,"Calle Guijarro, Ariadna",4PRA
+CENTAURO,"Casasnovas Martin, Santino",4PRA
+CENTAURO,"Cid Revilla, Hugo",4PRA
+KRAKEN,"Dick , Andreas",4PRA
+KRAKEN,"Esteban Sánchez, Carla",4PRA
+PEGASUS,"Foreman Moreno, Catherine",4PRA
+DRAGON,"Gnecco Rocha, Manuela",4PRA
+DRAGON,"Kallou Zemmouri, Dunia",4PRA
+CENTAURO,"Li , Kira",4PRA
+CENTAURO,"López Flores, Lucía",4PRA
+PEGASUS,"Moreno Muñoz, Elisabeth",4PRA
+DRAGON,"Munera Martínez, David",4PRA
+PEGASUS,"Pesier Morte, Alice",4PRA
+DRAGON,"Praena Peña, Marco",4PRA
+KRAKEN,"Rodríguez Díez, Maretta",4PRA
+CENTAURO,"Yaremiy , Danylo",4PRA
+KRAKEN,"Zurbrugg Taveras, Alicia",4PRA
+PEGASUS,"Arteaga Ortiz, Jimena",4PRB
+PEGASUS,"Copado Redondo, María",4PRB
+KRAKEN,"Esteban Sánchez, Alicia",4PRB
+KRAKEN,"Fernández Laporte, Nestor Iván",4PRB
+CENTAURO,"García  Moreno, Ángela",4PRB
+KRAKEN,"Gonzalez Togores, Dorotea",4PRB
+DRAGON,"Hanneford-Smith Font, Nicolas",4PRB
+PEGASUS,"Hornos Titreville, Jeanne Juliette",4PRB
+PEGASUS,"Hudson , Kristina-Daria",4PRB
+CENTAURO,"Lorho López, Itziar",4PRB
+DRAGON,"Luciano Fernández, Sara",4PRB
+PEGASUS,"Olmos , Isabella Marie",4PRB
+CENTAURO,"Peñalver González, Kira",4PRB
+KRAKEN,"Pinna Rivero, Marco",4PRB
+DRAGON,"Salgado Arboleda, Eliott",4PRB
+DRAGON,"Sarabia López de Dicastillo, Paula",4PRB
+CENTAURO,"Serrano Marín, Pablo",4PRB
+DRAGON,"Zambrano Guerrero, Matteo Andrés",4PRB
+CENTAURO,"Zapardiel Godoy, Héctor",4PRB
+DRAGON,"Aguilera Matías, Mateo",5INA
+KRAKEN,"Aparicio Sánchez, Chloe",5INA
+DRAGON,"Barbero Kuramshyna, María",5INA
+CENTAURO,"Boury Anton, Lilou",5INA
+PEGASUS,"Díaz Díaz, Julia",5INA
+PEGASUS,"Gamero Gamero, Olivia",5INA
+DRAGON,"Jiang , Danzhou",5INA
+PEGASUS,"Liu , Mingze",5INA
+CENTAURO,"Pacheco Gómez, Jaime",5INA
+KRAKEN,"Pérez García, Rodrigo",5INA
+CENTAURO,"Peromingo , Tiago",5INA
+KRAKEN,"Rockmann Fernández-Sacristán, Félix",5INA
+DRAGON,"San José Giménez-Arnau, Leo",5INA
+CENTAURO,"Tujula , Joel Micaiah",5INA
+KRAKEN,"Belhadj Ivanova, Noor",5INB
+PEGASUS,"Casco Alonso, Erik",5INB
+DRAGON,"Cister Fernandez, Daniela",5INB
+PEGASUS,"Cuevas , Sebastián",5INB
+DRAGON,"Enterría Gonzálvez de Miranda, Luis",5INB
+CENTAURO,"Esibe Cinta, Rebeca",5INB
+PEGASUS,"Gilmartin Chacón, Sofía",5INB
+KRAKEN,"Guevara Perla, Chloe",5INB
+KRAKEN,"Hernández Menchero, Paula",5INB
+CENTAURO,"Merino Martínez, Gonzalo",5INB
+DRAGON,"Reyes McLaughlin, Noah",5INB
+KRAKEN,"Sørensen-Markovic Molina, Asthor",5INB
+CENTAURO,"Vila García, Alicia",5INB
+DRAGON,"Aguilar Ruiz, Elena",5PRA
+PEGASUS,"Arbona Díaz, Lola",5PRA
+DRAGON,"Barba Fernández, Emma",5PRA
+CENTAURO,"Francois Vanholsbeeck, Inaya",5PRA
+KRAKEN,"González Ramos, Elena",5PRA
+PEGASUS,"López Sánchez, Clara",5PRA
+KRAKEN,"Rodriguez León, Hugo",5PRA
+CENTAURO,"Romero Hernández, Marta",5PRA
+KRAKEN,"Soto Criado, Alba Maria De",5PRA
+PEGASUS,"Sun , Qinhao",5PRA
+DRAGON,"Cabrera Varela, Lucía",5PRB
+CENTAURO,"Camavinga , Celio Junior",5PRB
+DRAGON,"Gnecco Rocha, Juan Antonio",5PRB
+PEGASUS,"Hellmann , Elise Sophie Chamma",5PRB
+CENTAURO,"Martinez Aguirre, Alejandra",5PRB
+KRAKEN,"Pérez García, Mauro Gerardo",5PRB
+PEGASUS,"Salguero Vicente, Carla",5PRB
+KRAKEN,"Sánchez Díaz, Daniela",5PRB
+PEGASUS,"Serrano Barrientos, Elena",5PRB
+CENTAURO,"Val Franco, Gonzalo del",5PRB
+CENTAURO,"Arrebola Morales, Sira",6PRA
+DRAGON,"Beneyto D'Alolio, Teo",6PRA
+CENTAURO,"Cid Revilla, Daniella",6PRA
+PEGASUS,"Copado Redondo, Paz",6PRA
+KRAKEN,"Fernández Laporte, Eva Beatriz",6PRA
+KRAKEN,"Fernández Rico, Olivia",6PRA
+CENTAURO,"Glasberg Haim, Beatriz",6PRA
+KRAKEN,"González Martín, Alba Lucía",6PRA
+DRAGON,"Herraiz Uría, Valentín",6PRA
+KRAKEN,"Jareño Martínez, Vera",6PRA
+PEGASUS,"Martín Hernández, Pablo",6PRA
+PEGASUS,"Mayo Aquino, Eleanor",6PRA
+CENTAURO,"Merino Khamidov, Raúl",6PRA
+KRAKEN,"Nazábal García, David",6PRA
+CENTAURO,"Porres Cruz, Yago de",6PRA
+DRAGON,"Praena Peña, Valeria",6PRA
+DRAGON,"Schroll Manotas, Olivia",6PRA
+DRAGON,"Tudic , Ryan",6PRA
+KRAKEN,"Xie , Yujun",6PRA
+DRAGON,"Barbero , Alessandra Beatrice",6PRB
+DRAGON,"Choumari , Sam",6PRB
+KRAKEN,"Dick , Katharina",6PRB
+PEGASUS,"García Ballesteros, Ana",6PRB
+CENTAURO,"Garcia Fernandez, Blanca",6PRB
+KRAKEN,"Haro Bustillo, Paula",6PRB
+CENTAURO,"Herrero Olmos, Leo",6PRB
+PEGASUS,"Hudson , Harvey",6PRB
+CENTAURO,"Kim , Nakyung",6PRB
+CENTAURO,"Luengo Vela, Iria",6PRB
+DRAGON,"Marimón Oliva, Néstor",6PRB
+PEGASUS,"Mazelev , Artem",6PRB
+KRAKEN,"Mogedano Aguilar, Nicolás",6PRB
+DRAGON,"Munera Martínez, Hugo",6PRB
+PEGASUS,"Peñaranda Gutierrez, Fernando",6PRB
+PEGASUS,"Rodríguez del Santo, Elea",6PRB
+DRAGON,"Suárez Merino, Miguel",6PRB
+DRAGON,"Vazquez Rodríguez, Javier",6PRB`;
+
+/* =========================================================
+   2. PROCESAMIENTO DEL CSV Y CONFIGURACIÓN
    ========================================================= */
 const HOUSES = {
     pegasus:  { name: 'Pegasus',  color: '#f2c33a', glow: 'rgba(242,195,58,.55)',  text: '#241a00' },
@@ -552,23 +1168,40 @@ const HOUSES = {
     kraken:   { name: 'Kraken',   color: '#1c7ed6', glow: 'rgba(28,126,214,.55)',  text: '#ffffff' }
 };
 
-/* =========================================================
-   2. LISTADO DE ALUMNOS  ← EDITA AQUÍ
-   ========================================================= */
-const studentsData = [
-    { id: 1,  name: 'Lucía Fernández', house: 'pegasus',  icon: '🕊️' },
-    { id: 2,  name: 'Marcos Ruiz',     house: 'dragon',   icon: '🐉' },
-    { id: 3,  name: 'Elena Sotelo',    house: 'centauro', icon: '🏹' },
-    { id: 4,  name: 'Iván Peralta',    house: 'kraken',   icon: '🐙' },
-    { id: 5,  name: 'Sofía Marín',     house: 'pegasus',  icon: '⭐' },
-    { id: 6,  name: 'Diego Navarro',   house: 'dragon',   icon: '🔥' },
-    { id: 7,  name: 'Valeria Cruz',    house: 'centauro', icon: '🌿' },
-    { id: 8,  name: 'Hugo Beltrán',    house: 'kraken',   icon: '🌊' },
-    { id: 9,  name: 'Carmen Vidal',    house: 'pegasus',  icon: '🌙' },
-    { id: 10, name: 'Álvaro Ríos',     house: 'dragon',   icon: '⚔️' },
-    { id: 11, name: 'Nerea Campos',    house: 'centauro', icon: '🛡️' },
-    { id: 12, name: 'Pablo Iglesias',  house: 'kraken',   icon: '🧭' }
-];
+const ICONS = {
+    dragon: '🐉',
+    centauro: '🏹',
+    pegasus: '🕊️',
+    kraken: '🐙'
+};
+
+// Parsear el CSV
+let studentsData = [];
+const lines = csvData.trim().split('\n');
+for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    // Expresión regular para separar por comas, respetando las comillas
+    const matches = line.match(/(?:[^,"]+|"[^"]*")+/g);
+    if (matches && matches.length >= 3) {
+        const house = matches[0].toLowerCase().trim();
+        const name = matches[1].replace(/"/g, '').trim();
+        const className = matches[2].trim();
+        
+        studentsData.push({
+            id: i,
+            name: name,
+            house: house,
+            class: className,
+            icon: ICONS[house] || '🧙',
+            sorted: false
+        });
+    }
+}
+
+// Extraer clases únicas y ordenarlas
+const uniqueClasses = [...new Set(studentsData.map(s => s.class))].sort();
 
 /* =========================================================
    3. REFERENCIAS DEL DOM
@@ -579,6 +1212,7 @@ const announcement  = document.getElementById('announcement');
 const flashOverlay  = document.getElementById('flashOverlay');
 const resetBtn      = document.getElementById('resetBtn');
 const candlesLayer  = document.getElementById('candlesLayer');
+const classSelect   = document.getElementById('classSelect');
 
 let isSorting = false;
 
@@ -590,51 +1224,67 @@ let isSorting = false;
     for (let i = 0; i < numCandles; i++){
         const candle = document.createElement('div');
         candle.className = 'candle';
-        
-        // Distribuir por toda la pantalla
         candle.style.left = Math.random() * 100 + 'vw';
         candle.style.top = (10 + Math.random() * 80) + 'vh';
-        
-        // Animación y retardo aleatorio para que no floten al unísono
         const duration = 4 + Math.random() * 4;
         const delay = Math.random() * -6;
         candle.style.animationDuration = duration + 's';
         candle.style.animationDelay = delay + 's';
-        
-        // Tamaño ligeramente aleatorio
         const scale = 0.6 + Math.random() * 0.8;
         candle.style.transform = `scale(${scale})`;
-
         candlesLayer.appendChild(candle);
     }
 })();
 
 /* =========================================================
-   5. RENDERIZADO DE LAS TARJETAS
+   5. POBLAR SELECTOR DE CLASES
+   ========================================================= */
+uniqueClasses.forEach(cls => {
+    const option = document.createElement('option');
+    option.value = cls;
+    option.textContent = cls;
+    classSelect.appendChild(option);
+});
+
+/* =========================================================
+   6. RENDERIZADO DE LAS TARJETAS (FILTRADO)
    ========================================================= */
 function renderStudents(){
     studentGrid.innerHTML = '';
+    const selectedClass = classSelect.value;
+    
+    // Filtrar alumnos por la clase seleccionada
+    const filteredStudents = studentsData.filter(s => s.class === selectedClass);
 
-    studentsData.forEach((student, index) => {
+    filteredStudents.forEach((student, index) => {
         const card = document.createElement('div');
         card.className = 'student-card';
+        if (student.sorted) {
+            card.classList.add('sorted');
+            const house = HOUSES[student.house];
+            card.style.setProperty('--house-color', house.color);
+            card.style.setProperty('--house-glow',  house.glow);
+            card.style.setProperty('--house-text',  house.text);
+        }
+        
         card.style.setProperty('--i', index);
         card.innerHTML = `
             <div class="student-avatar">${student.icon}</div>
             <div class="student-name">${student.name}</div>
-            <div class="house-badge">Sin asignar</div>
+            <div class="house-badge">${student.sorted ? HOUSES[student.house].name : 'Sin asignar'}</div>
         `;
+        
         card.addEventListener('click', () => triggerSorting(student, card));
         studentGrid.appendChild(card);
     });
 }
 
 /* =========================================================
-   6. LA CEREMONIA
+   7. LA CEREMONIA
    ========================================================= */
 function triggerSorting(student, card){
     if (isSorting) return;
-    if (card.classList.contains('sorted')) return;
+    if (student.sorted) return;
 
     isSorting = true;
     const house = HOUSES[student.house];
@@ -648,6 +1298,7 @@ function triggerSorting(student, card){
 
     // --- Fase 2: revelación ---
     setTimeout(() => {
+        student.sorted = true; // Guardar estado
 
         // El sombrero se queda con el color de la casa
         hatStage.classList.remove('sorting');
@@ -675,12 +1326,11 @@ function triggerSorting(student, card){
         card.querySelector('.house-badge').textContent = house.name;
 
         isSorting = false;
-
     }, 2600);
 }
 
 /* =========================================================
-   7. PARTÍCULAS
+   8. PARTÍCULAS
    ========================================================= */
 function burstParticles(color){
     const rect = hatStage.getBoundingClientRect();
@@ -712,23 +1362,30 @@ function burstParticles(color){
 }
 
 /* =========================================================
-   8. REINICIAR
+   9. EVENTOS Y ARRANQUE
    ========================================================= */
+classSelect.addEventListener('change', renderStudents);
+
 resetBtn.addEventListener('click', () => {
     if (isSorting) return;
+    const selectedClass = classSelect.value;
+    
+    // Reiniciar solo los alumnos de la clase actual
+    studentsData.forEach(s => {
+        if (s.class === selectedClass) {
+            s.sorted = false;
+        }
+    });
 
     hatStage.classList.remove('sorted');
     hatStage.style.removeProperty('--house-color');
     hatStage.style.removeProperty('--house-glow');
 
     announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
-
     renderStudents();
 });
 
-/* =========================================================
-   9. ARRANQUE
-   ========================================================= */
+// Inicializar
 renderStudents();
 </script>
 </body>
