@@ -312,7 +312,7 @@
         to  { transform: translateY(5px) scale(1.05) rotate(1deg); }
     }
 
-    /* --- Escudo de la casa --- */
+    /* --- Escudo de la casa (Neutro / Seleccionado) --- */
     .crest-container {
         width: 180px;
         height: 250px;
@@ -320,9 +320,11 @@
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transform: scale(0.5) translateY(20px);
-        transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: scale(0.8) translateY(10px);
+        transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         pointer-events: none;
+        /* Color de brillo por defecto para el escudo neutro */
+        --house-glow: rgba(212, 175, 55, 0.4); 
     }
 
     .crest-container.visible {
@@ -568,9 +570,9 @@
                          alt="Oráculo de Themis">
                 </div>
 
-                <!-- Escudo de la casa -->
-                <div class="crest-container" id="crestContainer">
-                    <img class="crest-img" id="crestImg" src="" alt="Escudo de la casa">
+                <!-- Escudo (Empieza con el neutro) -->
+                <div class="crest-container visible" id="crestContainer">
+                    <img class="crest-img" id="crestImg" src="images/neutro.jpg" alt="Escudo Neutro">
                 </div>
             </div>
 
@@ -1297,7 +1299,7 @@ function triggerSorting(student, card){
     isSorting = true;
     const house = HOUSES[student.house];
 
-    // Ocultar escudo anterior
+    // Ocultar escudo anterior (o neutro) durante la animación
     crestContainer.classList.remove('visible');
 
     // --- Fase 1: el oráculo piensa ---
@@ -1317,7 +1319,7 @@ function triggerSorting(student, card){
         oracleStage.style.setProperty('--house-glow',  house.glow);
         oracleStage.classList.add('sorted');
 
-        // Mostrar el escudo
+        // Mostrar el escudo de la casa
         crestImg.src = `images/${house.crest}`;
         crestContainer.style.setProperty('--house-glow', house.glow);
         crestContainer.classList.add('visible');
@@ -1385,7 +1387,10 @@ function burstParticles(color){
    ========================================================= */
 classSelect.addEventListener('change', () => {
     renderStudents();
-    crestContainer.classList.remove('visible');
+    // Volver al escudo neutro
+    crestImg.src = 'images/neutro.jpg';
+    crestContainer.style.setProperty('--house-glow', 'rgba(212, 175, 55, 0.4)');
+    crestContainer.classList.add('visible');
 });
 
 resetBtn.addEventListener('click', () => {
@@ -1403,7 +1408,10 @@ resetBtn.addEventListener('click', () => {
     oracleStage.style.removeProperty('--house-color');
     oracleStage.style.removeProperty('--house-glow');
 
-    crestContainer.classList.remove('visible');
+    // Volver al escudo neutro
+    crestImg.src = 'images/neutro.jpg';
+    crestContainer.style.setProperty('--house-glow', 'rgba(212, 175, 55, 0.4)');
+    crestContainer.classList.add('visible');
 
     announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
     renderStudents();
