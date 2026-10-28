@@ -10,7 +10,7 @@
 <style>
     :root{
         --text: #c9d3e8;
-        --text-light: #f4ecd8; /* Tono pergamino */
+        --text-light: #f4ecd8;
         --muted: #a89984;
         --gold: #d4af37;
 
@@ -38,7 +38,6 @@
         overflow-x: hidden;
         position: relative;
         background-color: #0c0a09;
-        /* Fondo simulando el Gran Comedor */
         background-image: 
             radial-gradient(circle at 50% 40%, rgba(45, 35, 25, 0.8) 0%, transparent 60%),
             radial-gradient(circle at 10% 90%, rgba(20, 15, 10, 0.9) 0%, transparent 50%),
@@ -203,15 +202,26 @@
         gap: 2.5rem;
     }
 
-    /* ---------- ESCENARIO DEL ORÁCULO ---------- */
-    .oracle-area{
+    /* ---------- ESCENARIO DEL ORÁCULO Y ESCUDO ---------- */
+    .selection-stage-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 2rem;
         margin-top: 0.5rem;
+        width: 100%;
     }
 
+    .selection-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        min-height: 280px;
+    }
+
+    /* --- Oráculo --- */
     .oracle-stage{
         position: relative;
         width: 250px;
@@ -227,7 +237,6 @@
         box-shadow: 0 15px 35px rgba(0,0,0,0.8);
     }
 
-    /* Anillo giratorio de colores alrededor del oráculo */
     .oracle-stage::before{
         content: '';
         position: absolute;
@@ -244,7 +253,6 @@
 
     @keyframes spin{ to{ transform: rotate(360deg); } }
 
-    /* Estado reposo: respiración suave */
     .oracle-stage:not(.sorting):not(.sorted){
         animation: idle-breathe 4.5s ease-in-out infinite;
     }
@@ -253,35 +261,18 @@
         50%      { box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 50px rgba(120, 160, 255, .30); }
     }
 
-    /* Estado PENSANDO: el halo recorre los 4 colores */
     .oracle-stage.sorting{
         animation: cycle-glow 2s linear infinite;
         background: radial-gradient(circle at 50% 45%, #2a1a10 0%, #0a0604 72%);
     }
     @keyframes cycle-glow{
-        0%, 100%{
-            border-color: var(--pegasus);
-            box-shadow: 0 0 40px var(--pegasus-glow), 0 0 100px var(--pegasus-glow), inset 0 0 30px var(--pegasus-glow);
-        }
-        25%{
-            border-color: var(--dragon);
-            box-shadow: 0 0 40px var(--dragon-glow), 0 0 100px var(--dragon-glow), inset 0 0 30px var(--dragon-glow);
-        }
-        50%{
-            border-color: var(--centauro);
-            box-shadow: 0 0 40px var(--centauro-glow), 0 0 100px var(--centauro-glow), inset 0 0 30px var(--centauro-glow);
-        }
-        75%{
-            border-color: var(--kraken);
-            box-shadow: 0 0 40px var(--kraken-glow), 0 0 100px var(--kraken-glow), inset 0 0 30px var(--kraken-glow);
-        }
+        0%, 100%{ border-color: var(--pegasus); box-shadow: 0 0 40px var(--pegasus-glow), 0 0 100px var(--pegasus-glow), inset 0 0 30px var(--pegasus-glow); }
+        25%{ border-color: var(--dragon); box-shadow: 0 0 40px var(--dragon-glow), 0 0 100px var(--dragon-glow), inset 0 0 30px var(--dragon-glow); }
+        50%{ border-color: var(--centauro); box-shadow: 0 0 40px var(--centauro-glow), 0 0 100px var(--centauro-glow), inset 0 0 30px var(--centauro-glow); }
+        75%{ border-color: var(--kraken); box-shadow: 0 0 40px var(--kraken-glow), 0 0 100px var(--kraken-glow), inset 0 0 30px var(--kraken-glow); }
     }
-    .oracle-stage.sorting::before{
-        opacity: 1;
-        animation-duration: 1s;
-    }
+    .oracle-stage.sorting::before{ opacity: 1; animation-duration: 1s; }
 
-    /* Estado FINAL: color fijo de la casa */
     .oracle-stage.sorted{
         border-color: var(--house-color);
         box-shadow: 0 0 50px var(--house-glow), 0 0 120px var(--house-glow), inset 0 0 40px var(--house-glow);
@@ -290,11 +281,9 @@
     .oracle-stage.sorted::before{
         opacity: .95;
         animation-duration: 9s;
-        background: conic-gradient(from 0deg,
-            var(--house-color), transparent 55%, var(--house-color));
+        background: conic-gradient(from 0deg, var(--house-color), transparent 55%, var(--house-color));
     }
 
-    /* La imagen del Oráculo */
     .oracle-img {
         width: 170px;
         height: 170px;
@@ -302,7 +291,6 @@
         object-fit: cover;
         border: 4px solid rgba(212, 175, 55, 0.4);
         box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6);
-        /* Filtro para que parezca un artefacto antiguo y encaje con el fondo */
         filter: sepia(0.5) contrast(1.1) brightness(0.85);
         transition: transform .3s ease, filter .3s ease, border-color .3s ease;
         z-index: 2;
@@ -324,6 +312,35 @@
         to  { transform: translateY(5px) scale(1.05) rotate(1deg); }
     }
 
+    /* --- Escudo de la casa --- */
+    .crest-container {
+        width: 180px;
+        height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+        transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        pointer-events: none;
+    }
+
+    .crest-container.visible {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        pointer-events: auto;
+    }
+
+    .crest-img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        /* mix-blend-mode hace que el fondo negro de un jpg desaparezca */
+        mix-blend-mode: screen; 
+        filter: drop-shadow(0 0 20px var(--house-glow)) drop-shadow(0 0 5px rgba(255,255,255,0.4));
+        transition: filter 0.5s ease;
+    }
+
     /* ---------- TEXTO DE ANUNCIO ---------- */
     .announcement{
         font-size: clamp(1.1rem, 2.8vw, 1.5rem);
@@ -337,10 +354,7 @@
     }
 
     .dots{ display: inline-block; width: 1.4em; text-align: left; }
-    .dots::after{
-        content: '';
-        animation: dots 1.4s steps(1) infinite;
-    }
+    .dots::after{ content: ''; animation: dots 1.4s steps(1) infinite; }
     @keyframes dots{
         0%  { content: ''; }
         25% { content: '.'; }
@@ -381,7 +395,6 @@
         to  { opacity: 1; transform: none; }
     }
 
-    /* Destello que barre la tarjeta al pasar el ratón */
     .student-card::after{
         content: '';
         position: absolute;
@@ -440,7 +453,6 @@
         transition: all .5s cubic-bezier(.175, .885, .32, 1.275);
     }
 
-    /* --- Tarjeta ya asignada --- */
     .student-card.sorted{
         cursor: default;
         border-color: var(--house-color);
@@ -510,20 +522,16 @@
         animation: pop 1.2s cubic-bezier(.15, .7, .3, 1) forwards;
     }
     @keyframes pop{
-        0%{
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.5);
-        }
-        100%{
-            opacity: 0;
-            transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(.1);
-        }
+        0%{ opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+        100%{ opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(.1); }
     }
 
     /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 480px){
+    @media (max-width: 650px){
+        .selection-stage { flex-direction: column; gap: 1.5rem; }
         .oracle-stage{ width: 200px; height: 200px; }
         .oracle-img{ width: 130px; height: 130px; }
+        .crest-container { width: 140px; height: 180px; margin-top: -10px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
         h1 { font-size: 2rem; }
         .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
@@ -551,13 +559,21 @@
 
     <main class="container">
 
-        <div class="oracle-area">
-            <div class="oracle-stage" id="oracleStage">
-                <!-- Imagen del Oráculo de Themis -->
-                <img class="oracle-img" 
-                     src="https://upload.wikimedia.org/wikipedia/commons/7/79/Themis_Aigeus_Antikensammlung_Berlin_F2538.jpg" 
-                     alt="Oráculo de Themis">
+        <div class="selection-stage-wrapper">
+            <div class="selection-stage">
+                <!-- Oráculo -->
+                <div class="oracle-stage" id="oracleStage">
+                    <img class="oracle-img" 
+                         src="https://upload.wikimedia.org/wikipedia/commons/7/79/Themis_Aigeus_Antikensammlung_Berlin_F2538.jpg" 
+                         alt="Oráculo de Themis">
+                </div>
+
+                <!-- Escudo de la casa -->
+                <div class="crest-container" id="crestContainer">
+                    <img class="crest-img" id="crestImg" src="" alt="Escudo de la casa">
+                </div>
             </div>
+
             <div class="announcement" id="announcement">
                 Esperando a un alumno<span class="dots"></span>
             </div>
@@ -1150,10 +1166,10 @@ DRAGON,"Vazquez Rodríguez, Javier",6PRB`;
    2. PROCESAMIENTO DEL CSV Y CONFIGURACIÓN
    ========================================================= */
 const HOUSES = {
-    pegasus:  { name: 'Pegasus',  color: '#f2c33a', glow: 'rgba(242,195,58,.55)',  text: '#241a00' },
-    dragon:   { name: 'Dragon',   color: '#e03131', glow: 'rgba(224,49,49,.55)',   text: '#ffffff' },
-    centauro: { name: 'Centauro', color: '#2f9e44', glow: 'rgba(47,158,68,.55)',   text: '#ffffff' },
-    kraken:   { name: 'Kraken',   color: '#1c7ed6', glow: 'rgba(28,126,214,.55)',  text: '#ffffff' }
+    pegasus:  { name: 'Pegasus',  color: '#f2c33a', glow: 'rgba(242,195,58,.55)',  text: '#241a00', crest: 'pegasus.jpg' },
+    dragon:   { name: 'Dragon',   color: '#e03131', glow: 'rgba(224,49,49,.55)',   text: '#ffffff', crest: 'dragon.jpg' },
+    centauro: { name: 'Centauro', color: '#2f9e44', glow: 'rgba(47,158,68,.55)',   text: '#ffffff', crest: 'centauro.jpg' },
+    kraken:   { name: 'Kraken',   color: '#1c7ed6', glow: 'rgba(28,126,214,.55)',  text: '#ffffff', crest: 'kraken.jpg' }
 };
 
 const ICONS = {
@@ -1170,7 +1186,6 @@ for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
     
-    // Expresión regular para separar por comas, respetando las comillas
     const matches = line.match(/(?:[^,"]+|"[^"]*")+/g);
     if (matches && matches.length >= 3) {
         const house = matches[0].toLowerCase().trim();
@@ -1182,7 +1197,7 @@ for (let i = 1; i < lines.length; i++) {
             name: name,
             house: house,
             class: className,
-            icon: ICONS[house] || '🧙',
+            icon: ICONS[house] || '🧙', // Guardamos el icono real para usarlo tras la selección
             sorted: false
         });
     }
@@ -1194,13 +1209,15 @@ const uniqueClasses = [...new Set(studentsData.map(s => s.class))].sort();
 /* =========================================================
    3. REFERENCIAS DEL DOM
    ========================================================= */
-const studentGrid   = document.getElementById('studentGrid');
-const oracleStage   = document.getElementById('oracleStage');
-const announcement  = document.getElementById('announcement');
-const flashOverlay  = document.getElementById('flashOverlay');
-const resetBtn      = document.getElementById('resetBtn');
-const candlesLayer  = document.getElementById('candlesLayer');
-const classSelect   = document.getElementById('classSelect');
+const studentGrid    = document.getElementById('studentGrid');
+const oracleStage    = document.getElementById('oracleStage');
+const crestContainer = document.getElementById('crestContainer');
+const crestImg       = document.getElementById('crestImg');
+const announcement   = document.getElementById('announcement');
+const flashOverlay   = document.getElementById('flashOverlay');
+const resetBtn       = document.getElementById('resetBtn');
+const candlesLayer   = document.getElementById('candlesLayer');
+const classSelect    = document.getElementById('classSelect');
 
 let isSorting = false;
 
@@ -1241,12 +1258,15 @@ function renderStudents(){
     studentGrid.innerHTML = '';
     const selectedClass = classSelect.value;
     
-    // Filtrar alumnos por la clase seleccionada
     const filteredStudents = studentsData.filter(s => s.class === selectedClass);
 
     filteredStudents.forEach((student, index) => {
         const card = document.createElement('div');
         card.className = 'student-card';
+        
+        // Si ya está ordenado, usamos su icono de casa. Si no, el genérico.
+        let displayIcon = student.sorted ? student.icon : '🧑‍🎓';
+
         if (student.sorted) {
             card.classList.add('sorted');
             const house = HOUSES[student.house];
@@ -1257,7 +1277,7 @@ function renderStudents(){
         
         card.style.setProperty('--i', index);
         card.innerHTML = `
-            <div class="student-avatar">${student.icon}</div>
+            <div class="student-avatar">${displayIcon}</div>
             <div class="student-name">${student.name}</div>
             <div class="house-badge">${student.sorted ? HOUSES[student.house].name : 'Sin asignar'}</div>
         `;
@@ -1277,6 +1297,9 @@ function triggerSorting(student, card){
     isSorting = true;
     const house = HOUSES[student.house];
 
+    // Ocultar escudo anterior
+    crestContainer.classList.remove('visible');
+
     // --- Fase 1: el oráculo piensa ---
     oracleStage.classList.remove('sorted');
     oracleStage.classList.add('sorting');
@@ -1293,6 +1316,11 @@ function triggerSorting(student, card){
         oracleStage.style.setProperty('--house-color', house.color);
         oracleStage.style.setProperty('--house-glow',  house.glow);
         oracleStage.classList.add('sorted');
+
+        // Mostrar el escudo
+        crestImg.src = `images/${house.crest}`;
+        crestContainer.style.setProperty('--house-glow', house.glow);
+        crestContainer.classList.add('visible');
 
         announcement.innerHTML =
             `<strong style="color:${house.color}">${student.name}</strong>` +
@@ -1311,6 +1339,9 @@ function triggerSorting(student, card){
         card.style.setProperty('--house-glow',  house.glow);
         card.style.setProperty('--house-text',  house.text);
         card.classList.add('sorted');
+        
+        // CAMBIO DE EMOJI: aquí cambiamos el genérico por el de su casa
+        card.querySelector('.student-avatar').textContent = student.icon;
         card.querySelector('.house-badge').textContent = house.name;
 
         isSorting = false;
@@ -1352,7 +1383,10 @@ function burstParticles(color){
 /* =========================================================
    9. EVENTOS Y ARRANQUE
    ========================================================= */
-classSelect.addEventListener('change', renderStudents);
+classSelect.addEventListener('change', () => {
+    renderStudents();
+    crestContainer.classList.remove('visible');
+});
 
 resetBtn.addEventListener('click', () => {
     if (isSorting) return;
@@ -1368,6 +1402,8 @@ resetBtn.addEventListener('click', () => {
     oracleStage.classList.remove('sorted');
     oracleStage.style.removeProperty('--house-color');
     oracleStage.style.removeProperty('--house-glow');
+
+    crestContainer.classList.remove('visible');
 
     announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
     renderStudents();
