@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Magical Sorting Hat Selector</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --text-color: #c5a880;
+            --text-light: #ffffff;
+            --hat-color: #4e3629;
+            
+            /* House Colors */
+            --gryffindor: #740001;
+            --gryffindor-accent: #eeba30;
+            --slytherin: #1a472a;
+            --slytherin-accent: #aaaaaa;
+            --ravenclaw: #0e1a40;
+            --ravenclaw-accent: #946b2d;
+            --hufflepuff: #ecb939;
+            --hufflepuff-accent: #372e29;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(197, 168, 128, 0.3);
+            letter-spacing: 2px;
+        }
+
+        /* Container Layout */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            gap: 2.5rem;
+        }
+
+        /* Hat Stage Visual */
+        .hat-stage {
+            background: radial-gradient(circle, #241c15 0%, #120e0a 100%);
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7), 0 0 15px rgba(197, 168, 128, 0.2);
+            border: 4px solid #3a2e2b;
+            transition: all 0.5s ease;
+        }
+
+        .hat-stage::before {
+            content: '';
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            border-radius: 50%;
+            border: 1px dashed rgba(197, 168, 128, 0.2);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .hat-icon {
+            font-size: 6rem;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .hat-stage.sorting .hat-icon {
+            animation: deliberate-shake 0.5s ease infinite alternate;
+        }
+
+        @keyframes deliberate-shake {
+            0% { transform: scale(1.05) rotate(-5deg); }
+            100% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .announcement {
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+            min-height: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        /* Grid Design */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .student-card {
+            background-color: var(--card-bg);
+            border: 1px solid #455a64;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-color);
+            box-shadow: 0 8px 15px rgba(197, 168, 128, 0.15);
+        }
+
+        .student-avatar {
+            font-size: 2.5rem;
+            background: rgba(255,255,255,0.05);
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .student-name {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .house-badge {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 1px;
+            margin-top: auto;
+        }
+
+        /* Active House Styling States */
+        .student-card.gryffindor { 
+            border-color: var(--gryffindor-accent);
+            box-shadow: 0 0 15px rgba(116, 0, 1, 0.4);
+        }
+        .student-card.gryffindor .student-avatar { border-color: var(--gryffindor-accent); background: var(--gryffindor); }
+        .student-card.gryffindor .house-badge { opacity: 1; transform: scale(1); background: var(--gryffindor); color: var(--gryffindor-accent); }
+
+        .student-card.slytherin { 
+            border-color: var(--slytherin-accent);
+            box-shadow: 0 0 15px rgba(26, 71, 42, 0.4);
+        }
+        .student-card.slytherin .student-avatar { border-color: var(--slytherin-accent); background: var(--slytherin); }
+        .student-card.slytherin .house-badge { opacity: 1; transform: scale(1); background: var(--slytherin); color: var(--slytherin-accent); }
+
+        .student-card.ravenclaw { 
+            border-color: var(--ravenclaw-accent);
+            box-shadow: 0 0 15px rgba(14, 26, 64, 0.4);
+        }
+        .student-card.ravenclaw .student-avatar { border-color: var(--ravenclaw-accent); background: var(--ravenclaw); }
+        .student-card.ravenclaw .house-badge { opacity: 1; transform: scale(1); background: var(--ravenclaw); color: var(--ravenclaw-accent); }
+
+        .student-card.hufflepuff { 
+            border-color: var(--hufflepuff-accent);
+            box-shadow: 0 0 15px rgba(236, 185, 57, 0.4);
+        }
+        .student-card.hufflepuff .student-avatar { border-color: var(--hufflepuff-accent); background: var(--hufflepuff); }
+        .student-card.hufflepuff .house-badge { opacity: 1; transform: scale(1); background: var(--hufflepuff); color: var(--hufflepuff-accent); }
+
+        /* Full Screen Flash Burst effect */
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        .flash-overlay.active {
+            animation: flash-burst 0.8s ease-out forwards;
+        }
+
+        @keyframes flash-burst {
+            0% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <header>
+        <h1>The Sorting Hat Ceremony</h1>
+        <p>Click on an unassigned student wizard to activate the magical selector hat</p>
+    </header>
+
+    <div class="container">
+        <div class="hat-stage" id="hatStage">
+            <div class="hat-icon" id="hatIcon">🧙‍♂️</div>
+            <div class="announcement" id="announcement">Awaiting a student...</div>
+        </div>
+
+        <div class="student-grid" id="studentGrid"></div>
+    </div>
+
+    <script>
+        const studentsData = [
+            { id: 1, name: "Harry Potter", house: "gryffindor", icon: "⚡" },
+            { id: 2, name: "Hermione Granger", house: "gryffindor", icon: "📚" },
+            { id: 3, name: "Draco Malfoy", house: "slytherin", icon: "🍏" },
+            { id: 4, name: "Luna Lovegood", house: "ravenclaw", icon: "🦅" },
+            { id: 5, name: "Cedric Diggory", house: "hufflepuff", icon: "🏆" },
+            { id: 6, name: "Ron Weasley", house: "gryffindor", icon: "♟️" },
+            { id: 7, name: "Pansy Parkinson", house: "slytherin", icon: "🐍" },
+            { id: 8, name: "Cho Chang", house: "ravenclaw", icon: "🧹" }
+        ];
+
+        const houseThemes = {
+            gryffindor: { name: "Gryffindor!", color: "#740001", glow: "rgba(238, 186, 48, 0.6)" },
+            slytherin: { name: "Slytherin!", color: "#1a472a", glow: "rgba(170, 170, 170, 0.6)" },
+            ravenclaw: { name: "Ravenclaw!", color: "#0e1a40", glow: "rgba(148, 107, 45, 0.6)" },
+            hufflepuff: { name: "Hufflepuff!", color: "#ecb939", glow: "rgba(55, 46, 41, 0.6)" }
+        };
+
+        const studentGrid = document.getElementById('studentGrid');
+        const hatStage = document.getElementById('hatStage');
+        const hatIcon = document.getElementById('hatIcon');
+        const announcement = document.getElementById('announcement');
+        const flashOverlay = document.getElementById('flashOverlay');
+
+        let isSorting = false;
+
+        // Render Cards initially
+        function init() {
+            studentsData.forEach(student => {
+                const card = document.createElement('div');
+                card.className = 'student-card';
+                card.id = `student-${student.id}`;
+                card.innerHTML = `
+                    <div class="student-avatar">${student.icon}</div>
+                    <div class="student-name">${student.name}</div>
+                    <div class="house-badge">Unsorted</div>
+                `;
+                
+                card.addEventListener('click', () => triggerSorting(student, card));
+                studentGrid.appendChild(card);
+            });
+        }
+
+        function triggerSorting(student, card) {
+            // Block if sorting is in progress or if already sorted
+            if (isSorting || card.classList.contains('gryffindor') || card.classList.contains('slytherin') || card.classList.contains('ravenclaw') || card.classList.contains('hufflepuff')) {
+                return;
+            }
+
+            isSorting = true;
+            announcement.textContent = `Sorting ${student.name}...`;
+            announcement.style.color = 'var(--text-color)';
+            hatStage.classList.add('sorting');
+            hatIcon.textContent = "🎩";
+
+            // Delay for dramatic magic reveal
+            setTimeout(() => {
+                const theme = houseThemes[student.house];
+                
+                // Remove animation states
+                hatStage.classList.remove('sorting');
+                hatIcon.textContent = "🧙‍♂️";
+                
+                // Update stage background glow
+                hatStage.style.borderColor = theme.color;
+                hatStage.style.boxShadow = `0 0 40px ${theme.glow}`;
+                
+                // Update announcement text
+                announcement.textContent = `${student.name} belongs to ${theme.name}`;
+                announcement.style.color = theme.color === "#ecb939" ? "#ecb939" : "var(--text-light)";
+                
+                // Flash the screen with house color
+                flashOverlay.style.backgroundColor = theme.color;
+                flashOverlay.classList.add('active');
+                
+                // Add house classes to card to reveal styles & badges
+                card.classList.add(student.house);
+                const badge = card.querySelector('.house-badge');
+                badge.textContent = student.house;
+
+                // Cleanup flash class
+                setTimeout(() => {
+                    flashOverlay.classList.remove('active');
+                    isSorting = false;
+                }, 800);
+
+            }, 1800);
+        }
+
+        init();
+    </script>
+</body>
+</html>
