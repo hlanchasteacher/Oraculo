@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Oráculo Seleccionador · Casas del Colegio</title>
+<title>The Sorting Oracle · School Houses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
@@ -53,6 +53,19 @@
         pointer-events: none;
         background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
         z-index: 0;
+    }
+
+    /* ---------- ESTILOS DE IDIOMA SECUNDARIO ---------- */
+    .lang-es {
+        display: block;
+        font-size: 0.65em;
+        color: var(--muted);
+        font-family: 'MedievalSharp', cursive;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        margin-top: 0.3rem;
+        text-shadow: none;
+        text-transform: none;
     }
 
     /* ---------- BOTÓN DE SONIDO ---------- */
@@ -150,7 +163,7 @@
         text-transform: uppercase;
         color: var(--gold);
         text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0,0,0,0.9);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
         line-height: 1.1;
     }
 
@@ -161,6 +174,14 @@
         letter-spacing: .05em;
         font-style: italic;
         text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        margin-bottom: 0.3rem;
+    }
+
+    /* Ajuste específico para el subtítulo en español del header */
+    header .lang-es {
+        font-size: 0.9rem;
+        margin-top: 0;
+        margin-bottom: 0.8rem;
     }
 
     @keyframes fadeInDown {
@@ -232,7 +253,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: 1.5rem;
         margin-top: 0.5rem;
         width: 100%;
     }
@@ -361,7 +382,6 @@
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        /* mix-blend-mode hace que el fondo negro de un jpg desaparezca */
         mix-blend-mode: screen; 
         filter: drop-shadow(0 0 20px var(--house-glow)) drop-shadow(0 0 5px rgba(255,255,255,0.4));
         transition: filter 0.5s ease;
@@ -373,10 +393,18 @@
         font-weight: 700;
         letter-spacing: .05em;
         text-align: center;
-        min-height: 2.5rem;
+        min-height: 4.5rem; /* Aumentado para dejar espacio a los dos idiomas */
         color: var(--text-light);
         transition: color .4s ease, text-shadow .4s ease;
         text-shadow: 0 2px 15px rgba(0, 0, 0, .9);
+    }
+
+    /* Ajuste específico para el texto secundario en el anuncio */
+    .announcement .lang-es {
+        font-size: 0.7em;
+        color: #d1c3b0;
+        opacity: 0.85;
+        margin-top: 0.2rem;
     }
 
     .dots{ display: inline-block; width: 1.4em; text-align: left; }
@@ -477,6 +505,14 @@
         opacity: 0;
         transform: scale(.8) translateY(8px);
         transition: all .5s cubic-bezier(.175, .885, .32, 1.275);
+        text-align: center;
+    }
+
+    .house-badge .lang-es {
+        font-size: 0.8em;
+        letter-spacing: 0;
+        text-transform: lowercase;
+        margin-top: 1px;
     }
 
     .student-card.sorted{
@@ -499,6 +535,10 @@
         box-shadow: 0 0 15px var(--house-glow);
         text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
+    .student-card.sorted .house-badge .lang-es {
+        color: var(--house-text, #fff);
+        opacity: 0.8;
+    }
 
     /* ---------- BOTÓN REINICIAR ---------- */
     .reset-btn{
@@ -515,6 +555,7 @@
         transition: all .3s ease;
         text-transform: uppercase;
         margin-top: 1rem;
+        text-align: center;
     }
     .reset-btn:hover{
         background: rgba(212, 175, 55, .15);
@@ -522,6 +563,11 @@
         color: #fff;
         box-shadow: 0 0 20px rgba(212, 175, 55, .4);
         transform: translateY(-2px);
+    }
+    .reset-btn .lang-es {
+        font-size: 0.8em;
+        text-transform: none;
+        margin-top: 2px;
     }
 
     /* ---------- DESTELLO PANTALLA COMPLETA ---------- */
@@ -575,7 +621,7 @@
     </audio>
 
     <!-- Botón de silencio -->
-    <button class="mute-btn" id="muteBtn" title="Silenciar/Activar música">🔊</button>
+    <button class="mute-btn" id="muteBtn" title="Mute/Unmute (Silenciar/Activar)">🔊</button>
 
     <!-- Capa de velas flotantes -->
     <div class="candles-layer" id="candlesLayer" aria-hidden="true"></div>
@@ -584,13 +630,18 @@
     <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
 
     <header>
-        <div class="header-subtitle">La Ceremonia de Selección</div>
-        <h1>¿A qué casa perteneces?</h1>
-        <p>Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
+        <div class="header-subtitle">The Selection Ceremony</div>
+        <h1>Which house do you belong to?</h1>
+        <div class="lang-es">La Ceremonia de Selección · ¿A qué casa perteneces?</div>
+        <p>Choose your class, click your name, and the Oracle will reveal your destiny.</p>
+        <p class="lang-es">Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
     </header>
 
     <div class="class-selector-container">
-        <label for="classSelect">Selecciona tu clase:</label>
+        <label for="classSelect">
+            Select your class: 
+            <span class="lang-es" style="display:inline; margin-left: 5px;">(Selecciona tu clase)</span>
+        </label>
         <select id="classSelect"></select>
     </div>
 
@@ -602,29 +653,33 @@
                 <div class="oracle-stage" id="oracleStage">
                     <img class="oracle-img" 
                          src="https://upload.wikimedia.org/wikipedia/commons/7/79/Themis_Aigeus_Antikensammlung_Berlin_F2538.jpg" 
-                         alt="Oráculo de Themis">
+                         alt="Oracle of Themis">
                 </div>
 
                 <!-- Escudo (Empieza con el neutro) -->
                 <div class="crest-container visible" id="crestContainer">
-                    <img class="crest-img" id="crestImg" src="images/neutro.jpg" alt="Escudo Neutro">
+                    <img class="crest-img" id="crestImg" src="images/neutro.jpg" alt="Neutral Crest">
                 </div>
             </div>
 
             <div class="announcement" id="announcement">
-                Esperando a un alumno<span class="dots"></span>
+                Awaiting a student<span class="dots"></span>
+                <span class="lang-es">Esperando a un alumno<span class="dots"></span></span>
             </div>
         </div>
 
         <div class="student-grid" id="studentGrid"></div>
 
-        <button class="reset-btn" id="resetBtn">↺ Reiniciar ceremonia actual</button>
+        <button class="reset-btn" id="resetBtn">
+            ↺ Reset current ceremony
+            <span class="lang-es">Reiniciar ceremonia actual</span>
+        </button>
 
     </main>
 
 <script>
 /* =========================================================
-   1. DATOS DE LOS ALUMNOS (Nuevo CSV)
+   1. DATOS DE LOS ALUMNOS (Anonimizados)
    ========================================================= */
 const csvData = `House,Student,Class
 DRAGON,"A, Sofía",Alberto
@@ -1341,7 +1396,10 @@ function renderStudents(){
         card.innerHTML = `
             <div class="student-avatar">${displayIcon}</div>
             <div class="student-name">${student.name}</div>
-            <div class="house-badge">${student.sorted ? HOUSES[student.house].name : 'Sin asignar'}</div>
+            <div class="house-badge">
+                ${student.sorted ? HOUSES[student.house].name : 'Unsorted'}
+                <span class="lang-es">${student.sorted ? 'Asignado' : 'Sin asignar'}</span>
+            </div>
         `;
         
         card.addEventListener('click', () => triggerSorting(student, card));
@@ -1364,60 +1422,59 @@ function triggerSorting(student, card){
 
     // --- AUDIO ---
     if (!isMuted) {
-        bgMusic.pause(); // Pausar fondo
-        sortingMusic.currentTime = 0; // Rebobinar
-        sortingMusic.play().catch(e => console.log(e)); // Reproducir elección
+        bgMusic.pause();
+        sortingMusic.currentTime = 0;
+        sortingMusic.play().catch(e => console.log(e));
     }
 
-    // Ocultar escudo anterior (o neutro) durante la animación
     crestContainer.classList.remove('visible');
 
     // --- Fase 1: el oráculo piensa ---
     oracleStage.classList.remove('sorted');
     oracleStage.classList.add('sorting');
 
-    announcement.innerHTML =
-        `El Oráculo está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span>`;
+    // Texto bilingüe pensando
+    announcement.innerHTML = `
+        The Oracle is deciding the fate of <strong>${student.name}</strong><span class="dots"></span>
+        <span class="lang-es">El Oráculo está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span></span>
+    `;
 
     // --- Fase 2: revelación ---
     setTimeout(() => {
         student.sorted = true;
 
-        // El oráculo se queda con el color de la casa
         oracleStage.classList.remove('sorting');
         oracleStage.style.setProperty('--house-color', house.color);
         oracleStage.style.setProperty('--house-glow',  house.glow);
         oracleStage.classList.add('sorted');
 
-        // Mostrar el escudo de la casa
         crestImg.src = `images/${house.crest}`;
         crestContainer.style.setProperty('--house-glow', house.glow);
         crestContainer.classList.add('visible');
 
-        announcement.innerHTML =
-            `<strong style="color:${house.color}">${student.name}</strong>` +
-            ` pertenece a <strong style="color:${house.color}">${house.name}</strong>`;
+        // Texto bilingüe revelación
+        announcement.innerHTML = `
+            <strong style="color:${house.color}">${student.name}</strong> belongs to <strong style="color:${house.color}">${house.name}</strong>
+            <span class="lang-es"><strong style="color:${house.color}">${student.name}</strong> pertenece a <strong style="color:${house.color}">${house.name}</strong></span>
+        `;
 
-        // Destello de pantalla y partículas
         flashOverlay.style.background = house.color;
         flashOverlay.classList.add('active');
         setTimeout(() => flashOverlay.classList.remove('active'), 900);
         burstParticles(house.color);
 
-        // La tarjeta se marca con los colores de la casa
         card.style.setProperty('--house-color', house.color);
         card.style.setProperty('--house-glow',  house.glow);
         card.style.setProperty('--house-text',  house.text);
         card.classList.add('sorted');
         
         card.querySelector('.student-avatar').textContent = student.icon;
-        card.querySelector('.house-badge').textContent = house.name;
+        card.querySelector('.house-badge').innerHTML = `
+            ${house.name}
+            <span class="lang-es">Asignado</span>
+        `;
 
-        // --- AUDIO ---
         if (!isMuted) {
-            // Si el audio de elección sigue sonando, lo paramos (o dejamos que termine)
-            // y volvemos a poner el de fondo.
-            // sortingMusic.pause(); // Descomenta si quieres que corte en seco
             bgMusic.play().catch(e => console.log(e));
         }
 
@@ -1485,7 +1542,11 @@ resetBtn.addEventListener('click', () => {
     crestContainer.style.setProperty('--house-glow', 'rgba(212, 175, 55, 0.4)');
     crestContainer.classList.add('visible');
 
-    announcement.innerHTML = 'Esperando a un alumno<span class="dots"></span>';
+    // Texto bilingüe reinicio
+    announcement.innerHTML = `
+        Awaiting a student<span class="dots"></span>
+        <span class="lang-es">Esperando a un alumno<span class="dots"></span></span>
+    `;
     renderStudents();
 });
 
