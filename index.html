@@ -55,12 +55,12 @@
         z-index: 0;
     }
 
-    /* ---------- ESTILOS DE IDIOMA SECUNDARIO (CASTELLANO) ---------- */
+    /* ---------- ESTILOS DE IDIOMA SECUNDARIO (TARJETAS Y ANUNCIOS) ---------- */
     .lang-es {
         display: block;
-        font-size: 0.8em; /* Más grande que antes */
-        color: #e8dfcc; /* Tono pergamino más brillante y legible */
-        font-family: 'Cinzel', serif; /* Misma fuente que el inglés para darle peso */
+        font-size: 0.8em;
+        color: #e8dfcc;
+        font-family: 'Cinzel', serif;
         font-weight: 500;
         letter-spacing: 0.05em;
         margin-top: 0.4rem;
@@ -136,35 +136,59 @@
         100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
     }
 
-    /* ---------- CABECERA ---------- */
+    /* ---------- CABECERA A DOS COLUMNAS ---------- */
     header{
         position: relative;
         z-index: 1;
         text-align: center;
-        margin-bottom: 1.5rem;
-        max-width: 800px;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 1100px;
         animation: fadeInDown 1.5s ease-out;
+    }
+
+    .header-columns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        width: 100%;
+    }
+
+    .col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 450px;
+    }
+
+    /* Línea divisoria dorada */
+    .divider {
+        width: 2px;
+        height: 120px;
+        background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+        opacity: 0.7;
     }
 
     .header-subtitle {
         font-family: 'MedievalSharp', cursive;
         color: var(--gold);
-        font-size: 0.95rem;
-        letter-spacing: 0.4em;
+        font-size: 0.9rem;
+        letter-spacing: 0.3em;
         text-transform: uppercase;
         margin-bottom: 0.5rem;
         text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     h1{
-        /* Reducimos ligeramente el inglés para compensar */
-        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-size: clamp(1.6rem, 3.5vw, 2.5rem);
         font-weight: 900;
         letter-spacing: .05em;
         text-transform: uppercase;
         color: var(--gold);
         text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0,0,0,0.9);
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.8rem;
         line-height: 1.1;
     }
 
@@ -175,15 +199,7 @@
         letter-spacing: .05em;
         font-style: italic;
         text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        margin-bottom: 0.3rem;
-    }
-
-    /* Ajuste para el subtítulo en español del header */
-    header .lang-es {
-        font-size: 1.1rem; /* Protagonismo aumentado */
-        color: var(--text-light);
-        margin-top: 0.5rem;
-        margin-bottom: 0.8rem;
+        line-height: 1.4;
     }
 
     @keyframes fadeInDown {
@@ -408,9 +424,8 @@
         text-shadow: 0 2px 15px rgba(0, 0, 0, .9);
     }
 
-    /* Ajuste para el castellano en el anuncio */
     .announcement .lang-es {
-        font-size: 0.85em; /* Más grande para equilibrar */
+        font-size: 0.85em;
         color: #e8dfcc;
         margin-top: 0.2rem;
     }
@@ -609,14 +624,25 @@
     }
 
     /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px){
+        .header-columns {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .divider {
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+    }
+
     @media (max-width: 650px){
         .selection-stage { flex-direction: column; gap: 1.5rem; }
         .oracle-stage{ width: 200px; height: 200px; }
         .oracle-img{ width: 130px; height: 130px; }
         .crest-container { width: 140px; height: 180px; margin-top: -10px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
-        h1 { font-size: 1.8rem; }
-        header .lang-es { font-size: 1rem; }
+        h1 { font-size: 1.6rem; }
         .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
     }
 </style>
@@ -641,11 +667,24 @@
     <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
 
     <header>
-        <div class="header-subtitle">The Selection Ceremony</div>
-        <h1>Which house do you belong to?</h1>
-        <div class="lang-es">La Ceremonia de Selección · ¿A qué casa perteneces?</div>
-        <p>Choose your class, click your name, and the Oracle will reveal your destiny.</p>
-        <p class="lang-es" style="font-family: 'MedievalSharp', cursive; font-style: italic; color: #d1c3b0;">Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
+        <div class="header-columns">
+            <!-- Columna Inglés -->
+            <div class="col">
+                <div class="header-subtitle">The Selection Ceremony</div>
+                <h1>Which house do you belong to?</h1>
+                <p>Choose your class, click your name, and the Oracle will reveal your destiny.</p>
+            </div>
+            
+            <!-- Divisoria -->
+            <div class="divider"></div>
+            
+            <!-- Columna Castellano -->
+            <div class="col">
+                <div class="header-subtitle">La Ceremonia de Selección</div>
+                <h1>¿A qué casa perteneces?</h1>
+                <p>Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
+            </div>
+        </div>
     </header>
 
     <div class="class-selector-container">
