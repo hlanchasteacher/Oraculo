@@ -55,7 +55,7 @@
         z-index: 0;
     }
 
-    /* ---------- ESTILOS DE IDIOMA SECUNDARIO (TARJETAS Y ANUNCIOS) ---------- */
+    /* ---------- ESTILOS DE IDIOMA SECUNDARIO ---------- */
     .lang-es {
         display: block;
         font-size: 0.8em;
@@ -68,29 +68,79 @@
         text-transform: none;
     }
 
-    /* ---------- BOTÓN DE SONIDO ---------- */
-    .mute-btn {
+    /* ---------- CONTROLES DE AUDIO ---------- */
+    .audio-controls {
         position: fixed;
         bottom: 20px;
         right: 20px;
         z-index: 100;
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid var(--gold);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 8px 16px;
+        border-radius: 30px;
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        backdrop-filter: blur(5px);
+    }
+
+    .mute-btn {
+        background: transparent;
+        border: none;
         color: var(--gold);
-        font-size: 1.5rem;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
+        font-size: 1.4rem;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease;
     }
     .mute-btn:hover {
-        background: rgba(212, 175, 55, 0.2);
-        transform: scale(1.1);
+        transform: scale(1.15);
+    }
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        width: 80px;
+        background: transparent;
+        cursor: pointer;
+    }
+    input[type="range"]:focus {
+        outline: none;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(212, 175, 55, 0.25);
+        border-radius: 3px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: var(--gold);
+        margin-top: -5px;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        transition: transform 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+    }
+    input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(212, 175, 55, 0.25);
+        border-radius: 3px;
+    }
+    input[type="range"]::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: var(--gold);
+        border: none;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
     }
 
     /* ---------- VELAS FLOTANTES ---------- */
@@ -163,7 +213,6 @@
         max-width: 450px;
     }
 
-    /* Línea divisoria dorada */
     .divider {
         width: 2px;
         height: 120px;
@@ -644,6 +693,10 @@
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
         h1 { font-size: 1.6rem; }
         .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
+        
+        /* Ajuste del control de audio en móviles */
+        .audio-controls { bottom: 10px; right: 10px; padding: 6px 12px; }
+        input[type="range"] { width: 60px; }
     }
 </style>
 </head>
@@ -653,12 +706,16 @@
     <audio id="bgMusic" loop>
         <source src="fondo.mp3" type="audio/mpeg">
     </audio>
+    <!-- Asegúrate de que eleccion.mp3 dure al menos 4-4.5 segundos -->
     <audio id="sortingMusic">
         <source src="eleccion.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Botón de silencio -->
-    <button class="mute-btn" id="muteBtn" title="Mute/Unmute (Silenciar/Activar)">🔊</button>
+    <!-- Controles de audio (Volumen y Silencio) -->
+    <div class="audio-controls">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" title="Volumen / Volume">
+        <button class="mute-btn" id="muteBtn" title="Mute/Unmute (Silenciar/Activar)">🔊</button>
+    </div>
 
     <!-- Capa de velas flotantes -->
     <div class="candles-layer" id="candlesLayer" aria-hidden="true"></div>
@@ -1357,6 +1414,7 @@ const classSelect    = document.getElementById('classSelect');
 const bgMusic = document.getElementById('bgMusic');
 const sortingMusic = document.getElementById('sortingMusic');
 const muteBtn = document.getElementById('muteBtn');
+const volumeSlider = document.getElementById('volumeSlider');
 
 let isSorting = false;
 let isMuted = false;
@@ -1384,16 +1442,36 @@ let isMuted = false;
 /* =========================================================
    5. AUDIO: CONFIGURACIÓN Y CONTROL
    ========================================================= */
-bgMusic.volume = 0.2; // Volumen bajito para el fondo
+bgMusic.volume = 0.5;
 
-// Iniciar música de fondo con la primera interacción (política de navegadores)
-function startBgMusic() {
-    if (!isMuted && bgMusic.paused) {
-        bgMusic.play().catch(e => console.log("Audio bloqueado por el navegador:", e));
+// Intentar arrancar la música automáticamente al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+    bgMusic.play().catch(e => {
+        console.log("Autoplay bloqueado por el navegador. La música esperará a la primera interacción.");
+        
+        // Plan B: Arrancar en el primer clic
+        const startMusicOnInteract = () => {
+            if (!isMuted) bgMusic.play().catch(err => console.log(err));
+            document.body.removeEventListener('click', startMusicOnInteract);
+        };
+        document.body.addEventListener('click', startMusicOnInteract);
+    });
+});
+
+// Control del Slider de Volumen
+volumeSlider.addEventListener('input', (e) => {
+    const vol = parseFloat(e.target.value);
+    bgMusic.volume = vol;
+    
+    if (vol > 0 && isMuted) {
+        isMuted = false;
+        muteBtn.textContent = '🔊';
+        if (!isSorting) bgMusic.play().catch(() => {});
+    } else if (vol === 0) {
+        isMuted = true;
+        muteBtn.textContent = '🔇';
     }
-}
-document.body.addEventListener('click', startBgMusic, { once: true });
-classSelect.addEventListener('change', startBgMusic);
+});
 
 // Botón de silencio
 muteBtn.addEventListener('click', (e) => {
@@ -1405,7 +1483,7 @@ muteBtn.addEventListener('click', (e) => {
         muteBtn.textContent = '🔇';
     } else {
         muteBtn.textContent = '🔊';
-        if (!isSorting) bgMusic.play();
+        if (!isSorting) bgMusic.play().catch(e => console.log(e));
     }
 });
 
@@ -1489,7 +1567,7 @@ function triggerSorting(student, card){
         <span class="lang-es">El Oráculo está decidiendo el destino de <strong>${student.name}</strong><span class="dots"></span></span>
     `;
 
-    // --- Fase 2: revelación ---
+    // --- Fase 2: revelación (Ahora dura 4300ms = 4.3s) ---
     setTimeout(() => {
         student.sorted = true;
 
@@ -1529,7 +1607,7 @@ function triggerSorting(student, card){
         }
 
         isSorting = false;
-    }, 2600);
+    }, 4300); // 4.3 segundos de espera
 }
 
 /* =========================================================
