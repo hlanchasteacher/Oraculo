@@ -55,16 +55,16 @@
         z-index: 0;
     }
 
-    /* ---------- ESTILOS DE IDIOMA SECUNDARIO ---------- */
+    /* ---------- ESTILOS DE IDIOMA SECUNDARIO (CASTELLANO) ---------- */
     .lang-es {
         display: block;
-        font-size: 0.65em;
-        color: var(--muted);
-        font-family: 'MedievalSharp', cursive;
-        font-weight: 400;
+        font-size: 0.8em; /* Más grande que antes */
+        color: #e8dfcc; /* Tono pergamino más brillante y legible */
+        font-family: 'Cinzel', serif; /* Misma fuente que el inglés para darle peso */
+        font-weight: 500;
         letter-spacing: 0.05em;
-        margin-top: 0.3rem;
-        text-shadow: none;
+        margin-top: 0.4rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         text-transform: none;
     }
 
@@ -149,7 +149,7 @@
     .header-subtitle {
         font-family: 'MedievalSharp', cursive;
         color: var(--gold);
-        font-size: 1rem;
+        font-size: 0.95rem;
         letter-spacing: 0.4em;
         text-transform: uppercase;
         margin-bottom: 0.5rem;
@@ -157,7 +157,8 @@
     }
 
     h1{
-        font-size: clamp(2rem, 5vw, 3.5rem);
+        /* Reducimos ligeramente el inglés para compensar */
+        font-size: clamp(1.8rem, 4vw, 3rem);
         font-weight: 900;
         letter-spacing: .05em;
         text-transform: uppercase;
@@ -170,17 +171,18 @@
     header p{
         font-family: 'MedievalSharp', cursive;
         color: #d1c3b0;
-        font-size: 1.1rem;
+        font-size: 1rem;
         letter-spacing: .05em;
         font-style: italic;
         text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         margin-bottom: 0.3rem;
     }
 
-    /* Ajuste específico para el subtítulo en español del header */
+    /* Ajuste para el subtítulo en español del header */
     header .lang-es {
-        font-size: 0.9rem;
-        margin-top: 0;
+        font-size: 1.1rem; /* Protagonismo aumentado */
+        color: var(--text-light);
+        margin-top: 0.5rem;
         margin-bottom: 0.8rem;
     }
 
@@ -208,8 +210,15 @@
         font-family: 'Cinzel', serif;
         font-weight: 700;
         color: var(--gold);
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         letter-spacing: 0.1em;
+    }
+
+    .class-selector-container label .lang-es {
+        display: inline;
+        margin-left: 0.5rem;
+        font-size: 0.85em;
+        color: var(--text-light);
     }
 
     #classSelect {
@@ -389,21 +398,20 @@
 
     /* ---------- TEXTO DE ANUNCIO ---------- */
     .announcement{
-        font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+        font-size: clamp(1.1rem, 2.8vw, 1.4rem);
         font-weight: 700;
         letter-spacing: .05em;
         text-align: center;
-        min-height: 4.5rem; /* Aumentado para dejar espacio a los dos idiomas */
+        min-height: 4.5rem; 
         color: var(--text-light);
         transition: color .4s ease, text-shadow .4s ease;
         text-shadow: 0 2px 15px rgba(0, 0, 0, .9);
     }
 
-    /* Ajuste específico para el texto secundario en el anuncio */
+    /* Ajuste para el castellano en el anuncio */
     .announcement .lang-es {
-        font-size: 0.7em;
-        color: #d1c3b0;
-        opacity: 0.85;
+        font-size: 0.85em; /* Más grande para equilibrar */
+        color: #e8dfcc;
         margin-top: 0.2rem;
     }
 
@@ -495,7 +503,7 @@
         margin-top: auto;
         padding: .35rem .8rem;
         border-radius: 4px;
-        font-size: .7rem;
+        font-size: .75rem;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: .1em;
@@ -509,10 +517,11 @@
     }
 
     .house-badge .lang-es {
-        font-size: 0.8em;
+        font-size: 0.85em;
         letter-spacing: 0;
         text-transform: lowercase;
-        margin-top: 1px;
+        margin-top: 2px;
+        color: #ccc;
     }
 
     .student-card.sorted{
@@ -537,7 +546,7 @@
     }
     .student-card.sorted .house-badge .lang-es {
         color: var(--house-text, #fff);
-        opacity: 0.8;
+        opacity: 0.9;
     }
 
     /* ---------- BOTÓN REINICIAR ---------- */
@@ -549,7 +558,7 @@
         border-radius: 4px;
         cursor: pointer;
         font-family: 'Cinzel', serif;
-        font-size: .9rem;
+        font-size: .95rem;
         font-weight: 700;
         letter-spacing: .1em;
         transition: all .3s ease;
@@ -565,9 +574,10 @@
         transform: translateY(-2px);
     }
     .reset-btn .lang-es {
-        font-size: 0.8em;
+        font-size: 0.85em;
         text-transform: none;
-        margin-top: 2px;
+        margin-top: 4px;
+        color: var(--text-light);
     }
 
     /* ---------- DESTELLO PANTALLA COMPLETA ---------- */
@@ -605,7 +615,8 @@
         .oracle-img{ width: 130px; height: 130px; }
         .crest-container { width: 140px; height: 180px; margin-top: -10px; }
         .student-grid{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
-        h1 { font-size: 2rem; }
+        h1 { font-size: 1.8rem; }
+        header .lang-es { font-size: 1rem; }
         .class-selector-container { flex-direction: column; gap: 0.5rem; padding: 1rem; }
     }
 </style>
@@ -634,13 +645,13 @@
         <h1>Which house do you belong to?</h1>
         <div class="lang-es">La Ceremonia de Selección · ¿A qué casa perteneces?</div>
         <p>Choose your class, click your name, and the Oracle will reveal your destiny.</p>
-        <p class="lang-es">Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
+        <p class="lang-es" style="font-family: 'MedievalSharp', cursive; font-style: italic; color: #d1c3b0;">Elige tu clase, haz clic en tu nombre y el Oráculo revelará tu destino.</p>
     </header>
 
     <div class="class-selector-container">
         <label for="classSelect">
             Select your class: 
-            <span class="lang-es" style="display:inline; margin-left: 5px;">(Selecciona tu clase)</span>
+            <span class="lang-es">(Selecciona tu clase)</span>
         </label>
         <select id="classSelect"></select>
     </div>
